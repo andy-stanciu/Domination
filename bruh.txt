@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-Andy Huang
-=======
-Owen and Andy
->>>>>>> f458b31b9e65862337eab97fe82b79992efb1139
+Owen, AndyS, Andyh2
