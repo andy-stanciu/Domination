@@ -16,6 +16,8 @@ public class UnitHandler : MonoBehaviour
     public GameObject archer;
     public GameObject longbowman;
 
+    public GameObject barracks;
+
     void Awake()
     {
         camera = Camera.main;
@@ -25,7 +27,7 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
-        CreateUnits(longbowman, 5, 4);
+        //CreateUnits(longbowman, 5, 4);
     }
 
     void Update()
@@ -33,11 +35,14 @@ public class UnitHandler : MonoBehaviour
         foreach (GameObject obj in click.selectableObjects)
         {
             Unit unit = obj.GetComponent<Unit>();
-            if (!unit.isStopped)
+            if (unit != null)
             {
-                if (obj.GetComponent<NavMeshAgent>().remainingDistance == 0)
+                if (!unit.isStopped)
                 {
-                    unit.StopMoving();
+                    if (obj.GetComponent<NavMeshAgent>().remainingDistance == 0)
+                    {
+                        unit.StopMoving();
+                    }
                 }
             }
         }
@@ -51,7 +56,7 @@ public class UnitHandler : MonoBehaviour
         }
     }
 
-    private void CreateUnits(GameObject type, int width, int length)
+    public void CreateUnits(GameObject type, int width, int length)
     {
         for (int i = 0; i < width; i++)
         {
