@@ -15,6 +15,7 @@ public class UnitHandler : MonoBehaviour
 
     public GameObject archer;
     public GameObject longbowman;
+    public GameObject villager;
 
     public GameObject barracks;
 
@@ -28,6 +29,7 @@ public class UnitHandler : MonoBehaviour
     void Start()
     {
         //CreateUnits(longbowman, 5, 4);
+        CreateUnits(villager, 5, 4);
     }
 
     void Update()
