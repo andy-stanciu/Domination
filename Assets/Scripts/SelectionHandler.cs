@@ -14,7 +14,7 @@ public class SelectionHandler : MonoBehaviour
 
     void Start()
     {
-        Camera.main.gameObject.GetComponent<Click>().selectableObjects.Add(this.gameObject);
+        Camera.main.gameObject.GetComponent<SelectionManager>().selectableObjects.Add(this.gameObject);
 
         outline = character.AddComponent(typeof(Outline)) as Outline;
         outline.precomputeOutline = true;

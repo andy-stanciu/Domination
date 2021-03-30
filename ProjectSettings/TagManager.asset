@@ -5,7 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - UnitHandler
+<<<<<<< HEAD
+=======
   - BuildingHandler
+>>>>>>> 80d3a8989937d75403bbce15b37d98d9ff55216d
   layers:
   - Default
   - TransparentFX
