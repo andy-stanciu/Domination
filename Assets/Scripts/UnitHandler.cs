@@ -6,9 +6,11 @@ using UnityEngine.AI;
 
 public class UnitHandler : MonoBehaviour
 {
-    private Camera camera;
     public Plane plane;
-    private Click click;
+
+    private Camera camera;
+    private Grid grid;
+    private SelectionManager selectionManager;
     private Vector3 zero;
 
     public LayerMask groundLayer;
@@ -19,45 +21,31 @@ public class UnitHandler : MonoBehaviour
     void Awake()
     {
         camera = Camera.main;
-        click = camera.GetComponent<Click>();
+        grid = GetComponent<Grid>();
+        selectionManager = camera.GetComponent<SelectionManager>();
         zero = Vector3.zero;
     }
 
     void Start()
     {
-        CreateUnits(longbowman, 5, 4);
+        CreateUnits(longbowman, 10, 10);
     }
 
     void Update()
     {
-        foreach (GameObject obj in click.selectableObjects)
-        {
-            Unit unit = obj.GetComponent<Unit>();
-            if (!unit.isStopped)
-            {
-                if (obj.GetComponent<NavMeshAgent>().remainingDistance == 0)
-                {
-                    unit.StopMoving();
-                }
-            }
-        }
-
         if (Input.GetMouseButtonDown(1))
         {
-            foreach(GameObject obj in click.selectedObjects)
-            {
-                MoveUnit(obj);
-            }
+            RightClickNode();
         }
     }
 
-    private void CreateUnits(GameObject type, int width, int length)
+    private void RightClickNode()
     {
-        for (int i = 0; i < width; i++)
+        if (selectionManager.selectedObjects.Count > 0)
         {
-            for (int j = 0; j < length; j++)
+            foreach (GameObject obj in selectionManager.selectedObjects)
             {
-                Instantiate(type, new Vector3(i, type.transform.position.y, type.transform.position.z - j), type.transform.rotation);
+                MoveUnit(obj);
             }
         }
     }
@@ -65,12 +53,31 @@ public class UnitHandler : MonoBehaviour
     private void MoveUnit(GameObject obj)
     {
         Unit unit = obj.GetComponent<Unit>();
-        NavMeshAgent unitAgent = obj.GetComponent<NavMeshAgent>();
         Vector3 destination = GetPointUnderCursor();
 
         if (!destination.Equals(zero))
         {
-            unitAgent.SetDestination(GetPointUnderCursor());
+            Node node = grid.NodeFromWorldPoint(destination);
+            if (node.isOccupied)
+            {
+                Node nearestNode = grid.FindNearestAvailableNode(node);
+                destination = nearestNode.worldPos;
+
+                if (destination == null) return;
+
+                unit.CurrentNode = nearestNode;
+                //nearestNode.isOccupied = true;
+            }
+            else
+            {
+                unit.CurrentNode = node;
+                //node.isOccupied = true;
+            }
+
+            //Node currentNode = grid.NodeFromWorldPoint(obj.transform.position);
+            //if (currentNode.isOccupied) currentNode.isOccupied = false;
+
+            unit.Move(destination);
             unit.StartMoving();
         }
     }
@@ -85,5 +92,16 @@ public class UnitHandler : MonoBehaviour
             return rayHit.point;
         }
         return Vector3.zero;
+    }
+
+    private void CreateUnits(GameObject type, int width, int length)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < length; j++)
+            {
+                Instantiate(type, new Vector3(i, type.transform.position.y, type.transform.position.z - j), type.transform.rotation);
+            }
+        }
     }
 }
