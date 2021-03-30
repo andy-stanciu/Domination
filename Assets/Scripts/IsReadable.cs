@@ -14,18 +14,18 @@ public class IsReadable : MonoBehaviour
 
     //private bool isShowing;
 
-    private Click click;
+    private SelectionManager selectionManager;
     private Camera camera;
 
     void Awake()
     {
         camera = Camera.main;
-        click = camera.GetComponent<Click>();
+        selectionManager = camera.GetComponent<SelectionManager>();
         barracksUI.SetActive(false);
     }
     void Update()
     {
-        if(click.selectedObjects.Contains(barracks))
+        if(selectionManager.selectedObjects.Contains(barracks))
         {
             //isShowing = !isShowing;
             barracksUI.SetActive(true);

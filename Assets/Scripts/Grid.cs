@@ -76,9 +76,9 @@ public class Grid : MonoBehaviour
         int nodeY = node.gridY;
 
         //Make the radius check infinitely, leaving as a large number for now
-        for (int y = 0; y < 10; y++)
+        for (int y = 0; y < 4; y++)
         {
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 4; x++)
             {
                 Node nearby = grid[nodeX + x, nodeY + y];
                 if (!nearby.isOccupied && nearby.walkable) return nearby;

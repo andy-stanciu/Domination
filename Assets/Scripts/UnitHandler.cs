@@ -99,7 +99,7 @@ public class UnitHandler : MonoBehaviour
         return Vector3.zero;
     }
 
-    private void CreateUnits(GameObject type, int width, int length)
+    public void CreateUnits(GameObject type, int width, int length)
     {
         for (int i = 0; i < width; i++)
         {
