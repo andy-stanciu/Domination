@@ -17,6 +17,9 @@ public class UnitHandler : MonoBehaviour
 
     public GameObject archer;
     public GameObject longbowman;
+    public GameObject villager;
+
+    public GameObject barracks;
 
     void Awake()
     {
@@ -28,18 +31,45 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
+<<<<<<< HEAD
         CreateUnits(longbowman, 10, 10);
+=======
+        //CreateUnits(longbowman, 5, 4);
+        CreateUnits(villager, 5, 4);
+>>>>>>> 80d3a8989937d75403bbce15b37d98d9ff55216d
     }
 
     void Update()
     {
+<<<<<<< HEAD
+=======
+        foreach (GameObject obj in click.selectableObjects)
+        {
+            Unit unit = obj.GetComponent<Unit>();
+            if (unit != null)
+            {
+                if (!unit.isStopped)
+                {
+                    if (obj.GetComponent<NavMeshAgent>().remainingDistance == 0)
+                    {
+                        unit.StopMoving();
+                    }
+                }
+            }
+        }
+
+>>>>>>> 80d3a8989937d75403bbce15b37d98d9ff55216d
         if (Input.GetMouseButtonDown(1))
         {
             RightClickNode();
         }
     }
 
+<<<<<<< HEAD
     private void RightClickNode()
+=======
+    public void CreateUnits(GameObject type, int width, int length)
+>>>>>>> 80d3a8989937d75403bbce15b37d98d9ff55216d
     {
         if (selectionManager.selectedObjects.Count > 0)
         {

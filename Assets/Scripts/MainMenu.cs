@@ -5,25 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField]
-    private string GameScene;
+  public void PlayGameGame()
+  {
+    SceneManager.LoadScene("Fake Game");
+  }
 
-    [SerializeField]
-    private string FakeGame;
-
-    public void PlayGameGame()
-    {
-    SceneManager.LoadScene(FakeGame);
-    }
-
-    public void PlayGame()
-    {
-    SceneManager.LoadScene(GameScene);
-    }
-
-    public void QuitGame()
-    {
+  public void PlayGame()
+  {
+    SceneManager.LoadScene("SampleScene");
+  }
+  public void QuitGame()
+  {
     Debug.Log("QUIT!");
     Application.Quit();
-    }
+  }
 }
