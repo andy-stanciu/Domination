@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ca36d83ab7c4871b37d6163adf96de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barracks: {fileID: 2553389714283148645, guid: becc418bc46534f8b815a421f839ce4c,
+  barracks: {fileID: 5065922298917181848, guid: 89051e2d0532fca41b514deeaa2dd292,
     type: 3}
 --- !u!1 &1111935769
 GameObject:

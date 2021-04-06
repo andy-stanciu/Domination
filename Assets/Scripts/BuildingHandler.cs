@@ -9,15 +9,11 @@ public class BuildingHandler : MonoBehaviour
 
     void Start()
     {
-        CreateUnits(barracks, new Vector3(0,0,0));
+        CreateBuilding(barracks, Vector3.zero);
     }
-    private void CreateUnits(GameObject type, Vector3 position)
+
+    private void CreateBuilding(GameObject type, Vector3 position)
     {
         Instantiate(type, position,type.transform.rotation);
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
