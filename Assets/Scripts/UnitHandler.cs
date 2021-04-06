@@ -32,7 +32,7 @@ public class UnitHandler : MonoBehaviour
     void Start()
     {
         //CreateUnits(longbowman, 10, 10);
-        //CreateUnits(longbowman, 5, 4);
+        CreateUnits(longbowman, 5, 4);
         //CreateUnits(villager, 5, 4);
     }
 
@@ -50,14 +50,17 @@ public class UnitHandler : MonoBehaviour
         {
             foreach (GameObject obj in selectionManager.selectedObjects)
             {
-                MoveUnit(obj);
+                Unit unit = obj.GetComponent<Unit>();
+                if (unit != null)
+                {
+                    MoveUnit(obj, unit);
+                }
             }
         }
     }
 
-    private void MoveUnit(GameObject obj)
+    private void MoveUnit(GameObject obj, Unit unit)
     {
-        Unit unit = obj.GetComponent<Unit>();
         Vector3 destination = GetPointUnderCursor();
 
         if (!destination.Equals(zero))

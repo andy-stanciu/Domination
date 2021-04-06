@@ -30,8 +30,11 @@ public class Grid : MonoBehaviour
         {
             foreach (Node node in grid)
             {
-                //Gizmos.color = (node.walkable) ? Color.white : Color.red;
-                //Gizmos.DrawCube(node.worldPos, Vector3.one * (nodeDiameter - 0.1f));
+                if (!node.walkable)
+                {
+                    Gizmos.color = (node.walkable) ? Color.white : Color.red;
+                    Gizmos.DrawCube(node.worldPos, Vector3.one * (nodeDiameter - 0.1f));
+                }
                 if (node.isOccupied)
                 {
                     Gizmos.color = Color.green;
