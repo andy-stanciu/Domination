@@ -31,7 +31,7 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
-        CreateUnits(longbowman, 10, 10);
+        //CreateUnits(longbowman, 10, 10);
         //CreateUnits(longbowman, 5, 4);
         //CreateUnits(villager, 5, 4);
     }
