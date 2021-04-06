@@ -9,7 +9,7 @@ public class BuildingHandler : MonoBehaviour
 
     void Start()
     {
-        CreateUnits(barracks, new Vector3(0,0,0));
+        //CreateUnits(barracks, new Vector3(0,0,0));
     }
     private void CreateUnits(GameObject type, Vector3 position)
     {
