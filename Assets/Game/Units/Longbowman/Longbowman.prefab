@@ -978,6 +978,7 @@ GameObject:
   - component: {fileID: 2027993369689338698}
   - component: {fileID: 5424224977178766769}
   - component: {fileID: -2912428190340243323}
+  - component: {fileID: -2838748619235688915}
   m_Layer: 8
   m_Name: Longbowman
   m_TagString: Untagged
@@ -1059,9 +1060,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b1a91cacb09504495c0bcbfc891ad6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  remainingDistance: 0
-  retry: 0
   isStopped: 0
+--- !u!195 &-2838748619235688915
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3747611545745432321}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3781514250669321487
 GameObject:
   m_ObjectHideFlags: 0

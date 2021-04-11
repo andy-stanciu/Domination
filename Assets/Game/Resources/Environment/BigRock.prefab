@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 8360484796198633567}
   - component: {fileID: 8360484796195733631}
   - component: {fileID: 8360484796196733631}
-  - component: {fileID: 8360484796192715487}
-  m_Layer: 0
-  m_Name: Rock1A
+  - component: {fileID: -6456494440517908582}
+  - component: {fileID: 2794018870494513128}
+  m_Layer: 9
+  m_Name: BigRock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,8 +81,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8360484796192715487
-MeshCollider:
+--- !u!65 &-6456494440517908582
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,7 +91,22 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: dfb9706df9ac8264ebf1e58976096256, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 10.810629, y: 9.420695, z: 12.414795}
+  m_Center: {x: -0.6240511, y: 1.9548079, z: -1.2386124}
+--- !u!208 &2794018870494513128
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8360484796199001215}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.405, y: 4.71, z: 6.2070003}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.624, y: 1.955, z: -1.2390001}
+  m_TimeToStationary: 0.5
