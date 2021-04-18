@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class UnitHandler : MonoBehaviour
 {
-    public Plane plane;
+    public Terrain terrain; 
 
     private Camera camera;
     private Grid grid;
@@ -104,7 +104,14 @@ public class UnitHandler : MonoBehaviour
         {
             for (int j = 0; j < length; j++)
             {
-                Instantiate(type, new Vector3(i + position.x, type.transform.position.y + position.y, type.transform.position.z - j + position.z), type.transform.rotation);
+                float currentX = i + position.x;
+                float currentZ = type.transform.position.z - j + position.z;
+
+                Vector3 loc = new Vector3(currentX, type.transform.position.y + position.y, currentZ);
+                loc.y += this.terrain.SampleHeight(loc);
+
+                Instantiate(type, loc, type.transform.rotation);
+                Debug.Log("Spawned unit at " + loc);
             }
         }
     }

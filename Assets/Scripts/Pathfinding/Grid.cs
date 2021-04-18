@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
+    public Terrain terrain;
     public bool displayGridGizmos;
     public LayerMask selectableObjects;
     public LayerMask obstacles;
@@ -110,6 +111,7 @@ public class Grid : MonoBehaviour
             for (int y = 0; y < gridSizeY; y++)
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                worldPoint += Vector3.up * (this.terrain.SampleHeight(worldPoint));
 
                 //Optimize this so that it does not use 2 physics check spheres
                 bool walkable = !Physics.CheckSphere(worldPoint, nodeRadius, selectableObjects);

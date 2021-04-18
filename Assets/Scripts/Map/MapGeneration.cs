@@ -8,6 +8,8 @@ using UnityEditor;
 
 public class MapGeneration : MonoBehaviour
 {
+    public Terrain terrain;
+
     // Implemented Prefabs
     public GameObject Factory;
     public GameObject GreenTree;
@@ -56,22 +58,6 @@ public class MapGeneration : MonoBehaviour
         generateBushes();
         generateResourceBuildings();
         generateAnimals();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*generatePlayerStart();
-        generateNature();
-        generateBushes();
-        generateResourceBuildings();
-        generateAnimals();*/
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void generateNature()
@@ -140,7 +126,9 @@ public class MapGeneration : MonoBehaviour
             randomizing = false;
         }
 
-        GameObject gameObject = Instantiate(type, new Vector3(x, type.transform.position.y, z), type.transform.rotation);
+        float y = this.terrain.SampleHeight(new Vector3(x, 0, z));
+
+        GameObject gameObject = Instantiate(type, new Vector3(x, type.transform.position.y + y, z), Quaternion.Euler(type.transform.rotation.x, Random.Range(0, 360), type.transform.rotation.z));
         resource.setGameObject(gameObject);
         this.resources.Add(resource);
     }
