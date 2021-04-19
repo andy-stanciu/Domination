@@ -3,9 +3,10 @@ using UnityEditor.AI;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public int x = 500;
-    public int y = 20;
-    public int z = 500;
+    public int sizeY = 5;
+
+    private int sizeX;
+    private int sizeZ;
 
     public float scale = 20f;
 
@@ -18,6 +19,9 @@ public class TerrainGenerator : MonoBehaviour
         this.offsetZ = Random.Range(0f, 9999f);
 
         Terrain terrain = GetComponent<Terrain>();
+
+        this.sizeX = this.sizeZ = terrain.terrainData.heightmapResolution;
+
         terrain.terrainData = GenerateTerrain(terrain.terrainData);
 
         NavMeshBuilder.BuildNavMesh();
@@ -25,8 +29,8 @@ public class TerrainGenerator : MonoBehaviour
 
     private TerrainData GenerateTerrain(TerrainData terrainData)
     {
-        terrainData.heightmapResolution = this.x + 1;
-        terrainData.size = new Vector3(x, y, z);
+        terrainData.heightmapResolution = this.sizeX;
+        terrainData.size = new Vector3(sizeX, sizeY, sizeZ);
         terrainData.SetHeights(0, 0, GenerateHeights());
 
         return terrainData;
@@ -34,13 +38,13 @@ public class TerrainGenerator : MonoBehaviour
 
     private float[,] GenerateHeights()
     {
-        float[,] heights = new float[x, z];
+        float[,] heights = new float[sizeX, sizeZ];
         
-        for (int j = 0; j < x; j++)
+        for (int x = 0; x < sizeX; x++)
         {
-            for (int k = 0; k < z; k++)
+            for (int z = 0; z < sizeZ; z++)
             {
-                heights[j, k] = CalculateHeight(j, k);
+                heights[x, z] = CalculateHeight(x, z);
             }
         }
 
@@ -49,8 +53,8 @@ public class TerrainGenerator : MonoBehaviour
 
     private float CalculateHeight(float x, float z)
     {
-        float xCoord = x / this.x * scale + offsetX;
-        float zCoord = z / this.z * scale + offsetZ;
+        float xCoord = x / this.sizeX * scale + offsetX;
+        float zCoord = z / this.sizeZ * scale + offsetZ;
 
         return Mathf.PerlinNoise(xCoord, zCoord);
     }

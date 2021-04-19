@@ -68,7 +68,7 @@ public class UnitHandler : MonoBehaviour
             Node node = grid.NodeFromWorldPoint(destination);
             if (node.isOccupied)
             {
-                Node nearestNode = grid.FindNearestAvailableNode(node);
+                Node nearestNode = grid.FindNearestAvailableNode2(node);
                 if (nearestNode == null) return;
 
                 destination = nearestNode.worldPos;
@@ -105,12 +105,16 @@ public class UnitHandler : MonoBehaviour
             for (int j = 0; j < length; j++)
             {
                 float currentX = i + position.x;
-                float currentZ = type.transform.position.z - j + position.z;
+                float currentZ = type.transform.position.z -  j + position.z;
 
                 Vector3 loc = new Vector3(currentX, type.transform.position.y + position.y, currentZ);
                 loc.y += this.terrain.SampleHeight(loc);
 
-                Instantiate(type, loc, type.transform.rotation);
+                GameObject unitObj = Instantiate(type, loc, type.transform.rotation);
+
+                Unit unit = unitObj.GetComponent<Unit>();
+                unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
+
                 Debug.Log("Spawned unit at " + loc);
             }
         }

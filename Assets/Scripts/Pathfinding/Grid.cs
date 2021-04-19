@@ -98,6 +98,54 @@ public class Grid : MonoBehaviour
                 if (!nearby.isOccupied && nearby.walkable) return nearby;
             }
         }
+
+        return null;
+    }
+
+    public Node FindNearestAvailableNode2(Node node)
+    {
+        int nodeX = node.gridX;
+        int nodeY = node.gridY;
+
+        float radius = 0;
+        Node result = null;
+
+        while (result == null)
+        {
+            for (int x = 0; x <= radius && result == null; x++)
+            {
+                int y = Mathf.RoundToInt(Mathf.Sqrt(radius * radius - x * x));
+
+                result = FindNearestAvailableNode4(nodeX, nodeY, x, y);
+            }
+
+            for (int y = 0; y <= radius && result == null; y++)
+            {
+                int x = Mathf.RoundToInt(Mathf.Sqrt(radius * radius - y * y));
+
+                result = FindNearestAvailableNode4(nodeX, nodeY, x, y);
+            }
+
+            radius += 0.5f;
+        }
+
+        return result;
+    }
+
+    public Node FindNearestAvailableNode4(int nodeX, int nodeY, int x, int y)
+    {
+        Node nearby = grid[nodeX + x, nodeY + y];
+        if (!nearby.isOccupied && nearby.walkable) return nearby;
+
+        nearby = grid[nodeX + x, nodeY - y];
+        if (!nearby.isOccupied && nearby.walkable) return nearby;
+
+        nearby = grid[nodeX - x, nodeY + y];
+        if (!nearby.isOccupied && nearby.walkable) return nearby;
+
+        nearby = grid[nodeX - x, nodeY - y];
+        if (!nearby.isOccupied && nearby.walkable) return nearby;
+
         return null;
     }
 

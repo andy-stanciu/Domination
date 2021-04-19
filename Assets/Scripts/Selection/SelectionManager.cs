@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class SelectionManager : MonoBehaviour
     private Vector3 mousePos2;
 
     private Camera camera;
+    private GraphicRaycaster graphicRaycaster;
 
     void Awake()
     {
@@ -28,15 +30,14 @@ public class SelectionManager : MonoBehaviour
         selectableObjects = new List<GameObject>();
 
         camera = Camera.main;
+        this.graphicRaycaster = GameObject.FindGameObjectWithTag("UI").GetComponent<GraphicRaycaster>();
     }
 
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;
-
         if (Input.GetMouseButtonDown(0))
         {
-            //if (IsPointerOverUI()) return;
+            if (IsPointerOverUI()) return;
 
             mousePos1 = camera.ScreenToViewportPoint(Input.mousePosition);
 
@@ -74,6 +75,8 @@ public class SelectionManager : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (IsPointerOverUI()) return;
+
             mousePos2 = camera.ScreenToViewportPoint(Input.mousePosition);
 
             if (mousePos1 != mousePos2)
@@ -81,6 +84,16 @@ public class SelectionManager : MonoBehaviour
                 SelectObjects();
             }
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = Input.mousePosition;
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        graphicRaycaster.Raycast(pointer, raycastResults); 
+
+        return raycastResults.Count > 0;
     }
 
     private void SelectObjects()

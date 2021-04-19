@@ -12,23 +12,26 @@ public class Building : MonoBehaviour
 
     private GameObject ui;
     private List<Button> buttons = new List<Button>();
-    private Vector3 unitSpawnPoint;
+    private Node center;
 
     private UnitHandler unitHandler;
+    private Grid grid;
 
     private float buttonPadding = 10;
 
     void Awake()
     {
         this.ui = GameObject.FindGameObjectWithTag("UI");
-        this.unitHandler = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
+
+        GameObject unitHandlerObj = GameObject.FindGameObjectWithTag("UnitHandler");
+        this.unitHandler = unitHandlerObj.GetComponent<UnitHandler>();
+        this.grid = unitHandlerObj.GetComponent<Grid>();
 
         foreach (Button child in this.ui.GetComponentsInChildren<Button>())
         {
             if (buttonTags.Contains(child.gameObject.name)) this.buttons.Add(child);
         }
-
-        this.unitSpawnPoint = transform.position - new Vector3(transform.localScale.x, 0, transform.localScale.z);
+        //this.unitSpawnPoint = transform.position - new Vector3(transform.localScale.x, 0, transform.localScale.z);
     }
 
     public void showGui()
@@ -58,7 +61,11 @@ public class Building : MonoBehaviour
         switch (action)
         {
             case "SpawnLongbowman":
-                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.unitSpawnPoint);
+                if (center == null)
+                {
+                    this.center = this.grid.NodeFromWorldPoint(transform.position);
+                }
+                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode2(center).worldPos);
                 break;
         }
     }

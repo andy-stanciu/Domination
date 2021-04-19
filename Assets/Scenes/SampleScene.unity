@@ -706,9 +706,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca04ee2c17433ab4889cc50b66b1e0a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 500
-  y: 5
-  z: 500
+  sizeY: 5
   scale: 15
 --- !u!154 &1532234979
 TerrainCollider:
