@@ -48,6 +48,11 @@ public class Unit : MonoBehaviour
         StartMoving();
     }
 
+    public void SetTask(GameObject obj)
+    {
+
+    }
+
     private void Update()
     {
         if (!this.isStopped)

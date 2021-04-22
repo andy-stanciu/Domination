@@ -874,6 +874,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
+  selectableLayer:
+    serializedVersion: 2
+    m_Bits: 256
   archer: {fileID: 6493267999238051414, guid: 695bec8f506c7094a9addf544e4c02d2, type: 3}
   longbowman: {fileID: 3747611545745432321, guid: 3a209987902767647a8a3dec3a4bb8d3,
     type: 3}

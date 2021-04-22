@@ -12,8 +12,10 @@ public class UnitHandler : MonoBehaviour
     private Grid grid;
     private SelectionManager selectionManager;
     private Vector3 zero;
+    private Vector3 negInf;
 
     public LayerMask groundLayer;
+    public LayerMask selectableLayer;
 
     public GameObject archer;
     public GameObject longbowman;
@@ -27,12 +29,13 @@ public class UnitHandler : MonoBehaviour
         grid = GetComponent<Grid>();
         selectionManager = camera.GetComponent<SelectionManager>();
         zero = Vector3.zero;
+        negInf = Vector3.negativeInfinity;
     }
 
     void Start()
     {
         //CreateUnits(longbowman, 10, 10);
-        CreateUnits(longbowman, 4, 5, Vector3.zero);
+        CreateUnits(longbowman, 4, 5, zero);
         //CreateUnits(villager, 5, 4);
     }
 
@@ -61,41 +64,39 @@ public class UnitHandler : MonoBehaviour
 
     private void MoveUnit(GameObject obj, Unit unit)
     {
-        Vector3 destination = GetPointUnderCursor();
+        Vector3 destination = zero;
+        bool hasTask = false;
 
-        if (!destination.Equals(zero))
-        {
-            Node node = grid.NodeFromWorldPoint(destination);
-            if (node.isOccupied)
-            {
-                Node nearestNode = grid.FindNearestAvailableNode2(node);
-                if (nearestNode == null) return;
-
-                destination = nearestNode.worldPos;
-
-                if (destination == null) return;
-
-                unit.CurrentNode = nearestNode;
-            }
-            else
-            {
-                unit.CurrentNode = node;
-            }
-
-            unit.Move(destination);
-        }
-    }
-
-    private Vector3 GetPointUnderCursor()
-    {
         RaycastHit rayHit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
-        if(Physics.Raycast(ray, out rayHit, Mathf.Infinity, groundLayer))
+        if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, groundLayer))
         {
-            return rayHit.point;
+            destination = rayHit.point;
         }
-        return Vector3.zero;
+        if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, selectableLayer)) hasTask = true;
+
+        if (destination == zero) return;
+
+        Node node = grid.NodeFromWorldPoint(destination);
+        if (node.isOccupied)
+        {
+            Node nearestNode = grid.FindNearestAvailableNode2(node);
+            if (nearestNode == null) return;
+
+            destination = nearestNode.worldPos;
+
+            if (destination == null) return;
+
+            unit.CurrentNode = nearestNode;
+        }
+        else
+        {
+            unit.CurrentNode = node;
+        }
+
+        unit.Move(destination);
+        if (hasTask) unit.SetTask(rayHit.transform.root.gameObject);
     }
 
     public void CreateUnits(GameObject type, int width, int length, Vector3 position)
