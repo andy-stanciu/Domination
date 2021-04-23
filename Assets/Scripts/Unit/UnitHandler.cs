@@ -115,6 +115,7 @@ public class UnitHandler : MonoBehaviour
 
                 Unit unit = unitObj.GetComponent<Unit>();
                 unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
+                unit.CreateHealthBar();
 
                 Debug.Log("Spawned unit at " + loc);
             }

@@ -461,7 +461,7 @@ MonoBehaviour:
     m_Bits: 256
   uiLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 32
   selectedObjects: []
   selectableObjects: []
 --- !u!114 &963194230
