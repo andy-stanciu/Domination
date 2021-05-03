@@ -15,7 +15,7 @@ public class Building : MonoBehaviour
     private Node center;
 
     private UnitHandler unitHandler;
-    private Grid grid;
+    private NodeGrid grid;
 
     private float buttonPadding = 10;
 
@@ -25,7 +25,7 @@ public class Building : MonoBehaviour
 
         GameObject unitHandlerObj = GameObject.FindGameObjectWithTag("UnitHandler");
         this.unitHandler = unitHandlerObj.GetComponent<UnitHandler>();
-        this.grid = unitHandlerObj.GetComponent<Grid>();
+        this.grid = unitHandlerObj.GetComponent<NodeGrid>();
 
         foreach (Button child in this.ui.GetComponentsInChildren<Button>())
         {
@@ -65,7 +65,7 @@ public class Building : MonoBehaviour
                 {
                     this.center = this.grid.NodeFromWorldPoint(transform.position);
                 }
-                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode2(center).worldPos);
+                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode(center).worldPos);
                 break;
         }
     }

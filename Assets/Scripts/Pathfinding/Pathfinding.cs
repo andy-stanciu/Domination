@@ -6,14 +6,14 @@ using System;
 public class Pathfinding : MonoBehaviour
 {
     private PathRequestManager requestManager;
-    private Grid grid;
+    private NodeGrid grid;
 
     private readonly int diagonalCost = 14;
     private readonly int straightCost = 10;
 
     void Awake()
     {
-        grid = GetComponent<Grid>();
+        grid = GetComponent<NodeGrid>();
         requestManager = GetComponent<PathRequestManager>();
     }
 

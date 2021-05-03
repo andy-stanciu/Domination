@@ -21,7 +21,7 @@ public class SelectionManager : MonoBehaviour
     private Vector3 mousePos1;
     private Vector3 mousePos2;
 
-    private Camera camera;
+    private new Camera camera;
     private GraphicRaycaster graphicRaycaster;
 
     void Awake()

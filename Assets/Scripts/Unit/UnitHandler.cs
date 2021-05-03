@@ -8,8 +8,8 @@ public class UnitHandler : MonoBehaviour
 {
     public Terrain terrain; 
 
-    private Camera camera;
-    private Grid grid;
+    private new Camera camera;
+    private NodeGrid grid;
     private SelectionManager selectionManager;
     private Vector3 zero;
     private Vector3 negInf;
@@ -26,7 +26,7 @@ public class UnitHandler : MonoBehaviour
     void Awake()
     {
         camera = Camera.main;
-        grid = GetComponent<Grid>();
+        grid = GetComponent<NodeGrid>();
         selectionManager = camera.GetComponent<SelectionManager>();
         zero = Vector3.zero;
         negInf = Vector3.negativeInfinity;
@@ -56,13 +56,13 @@ public class UnitHandler : MonoBehaviour
                 Unit unit = obj.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    MoveUnit(obj, unit);
+                    MoveUnit(unit);
                 }
             }
         }
     }
 
-    private void MoveUnit(GameObject obj, Unit unit)
+    private void MoveUnit(Unit unit)
     {
         Vector3 destination = zero;
         bool hasTask = false;
@@ -78,15 +78,26 @@ public class UnitHandler : MonoBehaviour
 
         if (destination == zero) return;
 
+        if (hasTask)
+        {
+            unit.SetTask(rayHit.transform.root.gameObject);
+            return;
+        }
+
+        MoveUnitToNode(unit, destination, true);
+    }
+
+    public Vector3 MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned, float minRadius)
+    {
         Node node = grid.NodeFromWorldPoint(destination);
         if (node.isOccupied)
         {
-            Node nearestNode = grid.FindNearestAvailableNode2(node);
-            if (nearestNode == null) return;
+            Node nearestNode = grid.FindNearestAvailableNode(node, minRadius);
+            if (nearestNode == null) return destination;
 
             destination = nearestNode.worldPos;
 
-            if (destination == null) return;
+            if (destination == null) return destination;
 
             unit.CurrentNode = nearestNode;
         }
@@ -95,8 +106,14 @@ public class UnitHandler : MonoBehaviour
             unit.CurrentNode = node;
         }
 
+        if (unassigned) unit.SetState(Unit.State.Unassigned);
         unit.Move(destination);
-        if (hasTask) unit.SetTask(rayHit.transform.root.gameObject);
+        return destination;
+    }
+
+    public void MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned)
+    {
+        MoveUnitToNode(unit, destination, unassigned, 0);
     }
 
     public void CreateUnits(GameObject type, int width, int length, Vector3 position)
@@ -115,9 +132,9 @@ public class UnitHandler : MonoBehaviour
 
                 Unit unit = unitObj.GetComponent<Unit>();
                 unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
-                unit.CreateHealthBar();
+                unit.InstantiateUnit();
 
-                Debug.Log("Spawned unit at " + loc);
+                //Debug.Log("Spawned unit at " + loc);
             }
         }
     }
