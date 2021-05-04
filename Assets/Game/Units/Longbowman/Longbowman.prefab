@@ -1061,6 +1061,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStopped: 0
+  healthBarPrefab: {fileID: 5898942433594515962, guid: 1aaa7bdf4ba535542b4ddd8731b39062,
+    type: 3}
+  projectilePrefab: {fileID: 6487071924879505076, guid: 70e39d0435f510542874d8eba695ce20,
+    type: 3}
+  hitpoints: 100
+  unitHeight: 2
+  range: 10
+  lineOfSight: 16
+  rateOfFire: 5
+  projectileSpeed: 15
+  rangedDamage: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  selectableObjectsLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!195 &-2838748619235688915
 NavMeshAgent:
   m_ObjectHideFlags: 0

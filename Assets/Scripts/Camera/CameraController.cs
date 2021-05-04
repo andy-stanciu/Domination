@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     public float maxFov = 90f;
     public float zoomSensitivity = 40f;
 
-    private Camera camera;
+    private new Camera camera;
 
     private void Awake()
     {

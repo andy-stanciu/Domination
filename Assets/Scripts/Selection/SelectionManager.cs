@@ -21,7 +21,7 @@ public class SelectionManager : MonoBehaviour
     private Vector3 mousePos1;
     private Vector3 mousePos2;
 
-    private Camera camera;
+    private new Camera camera;
     private GraphicRaycaster graphicRaycaster;
 
     void Awake()
@@ -139,13 +139,16 @@ public class SelectionManager : MonoBehaviour
         {
             foreach (GameObject obj in selectedObjects)
             {
-                if (obj != null)
-                {
-                    obj.GetComponent<SelectionHandler>().isSelected = false;
-                    obj.GetComponent<SelectionHandler>().OnClick();
+                if (obj == null) continue;
 
-                    ToggleBuildingGui(obj, false);
-                }
+                SelectionHandler clicked = obj.GetComponent<SelectionHandler>();
+                if (clicked == null) continue;
+
+                clicked.isSelected = false;
+                clicked.OnClick();
+
+                ToggleBuildingGui(obj, false);
+                ToggleHealthBar(obj, false);
             }
 
             selectedObjects.Clear();
@@ -154,24 +157,27 @@ public class SelectionManager : MonoBehaviour
 
     private void AddToSelection(GameObject obj, SelectionHandler clicked)
     {
+        if (clicked == null) return;
+
         selectedObjects.Add(obj);
         clicked.isSelected = true;
         clicked.OnClick();
 
         ToggleBuildingGui(obj, true);
+        ToggleHealthBar(obj, true);
     }
 
-    private void RemoveFromSelection(GameObject obj, SelectionHandler clicked)
+    public void RemoveFromSelection(GameObject obj, SelectionHandler clicked)
     {
+        if (clicked == null) return;
+
         selectedObjects.Remove(obj);
 
-        if (clicked != null)
-        {
-            clicked.isSelected = false;
-            clicked.OnClick();
-        }
+        clicked.isSelected = false;
+        clicked.OnClick();
 
         ToggleBuildingGui(obj, false);
+        ToggleHealthBar(obj, false);
     }
 
     private void ToggleBuildingGui(GameObject obj, bool show)
@@ -181,6 +187,15 @@ public class SelectionManager : MonoBehaviour
         {
             if (show) building.showGui();
             else building.hideGui();
+        }
+    }
+
+    private void ToggleHealthBar(GameObject obj, bool show)
+    {
+        Unit unit = obj.GetComponent<Unit>();
+        if (unit != null)
+        {
+            unit.ToggleHealthBar(show);
         }
     }
 }
