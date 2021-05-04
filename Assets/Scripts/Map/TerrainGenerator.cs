@@ -22,9 +22,9 @@ public class TerrainGenerator : MonoBehaviour
 
         this.sizeX = this.sizeZ = terrain.terrainData.heightmapResolution;
 
-        terrain.terrainData = GenerateTerrain(terrain.terrainData);
+        //terrain.terrainData = GenerateTerrain(terrain.terrainData);
 
-        NavMeshBuilder.BuildNavMesh();
+        //NavMeshBuilder.BuildNavMesh();
     }
 
     private TerrainData GenerateTerrain(TerrainData terrainData)
