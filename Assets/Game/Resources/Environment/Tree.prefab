@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4804706081486717877}
   - component: {fileID: 4804706081487815029}
   - component: {fileID: 4804706081470736311}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Broadleaf_Desktop_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 4804706081486717879}
   - component: {fileID: 4804706081487815031}
   - component: {fileID: 4804706081470736305}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Broadleaf_Desktop_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,9 @@ GameObject:
   - component: {fileID: 4804706081469519669}
   - component: {fileID: 1535642325720547145}
   - component: {fileID: 4355886494338311032}
-  m_Layer: 9
+  - component: {fileID: -8475775167025186508}
+  - component: {fileID: 3313603621594809484}
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,6 +290,32 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.06395966, y: 5.366273, z: 0.08291617}
   m_TimeToStationary: 0.5
+--- !u!114 &-8475775167025186508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804706081485823925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b335fce40d4114d9443239531fdf92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3313603621594809484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4804706081485823925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70a30a0543cec9a43aca5854b97e5c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 4804706081485823925}
+  isSelected: 0
 --- !u!1 &4804706081485823927
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +327,7 @@ GameObject:
   - component: {fileID: 4804706081485390743}
   - component: {fileID: 4804706081471514357}
   - component: {fileID: 4804706081470736309}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Broadleaf_Desktop_Billboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804706081485390745}
   - component: {fileID: 4804706081497488407}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: CollisionObject1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804706081485390747}
   - component: {fileID: 4804706081497638773}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: CollisionObject2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +499,7 @@ GameObject:
   - component: {fileID: 4804706081486717873}
   - component: {fileID: 4804706081487815025}
   - component: {fileID: 4804706081470736307}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Broadleaf_Desktop_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4804706081485390751}
   - component: {fileID: 4804706081497488405}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: CollisionObject0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

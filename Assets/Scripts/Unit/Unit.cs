@@ -31,6 +31,10 @@ public class Unit : MonoBehaviour
     private LayerMask obstacleLayer;
     [SerializeField]
     private LayerMask selectableObjectsLayer;
+    [SerializeField]
+    private bool attack;
+    [SerializeField]
+    private bool search;
 
     private int health;
     private State state;
@@ -52,6 +56,7 @@ public class Unit : MonoBehaviour
     private SelectionManager selectionManager;
     private SelectionHandler selectionHandler;
     private UnitHandler unitHandler;
+    private VillagerManager villageManager;
 
     //private float speed = 5.0f;
     //private Vector3[] path;
@@ -172,9 +177,15 @@ public class Unit : MonoBehaviour
         //Unit functions only when they are alive
         if (this.gameObject.layer != 9)
         {
-            Seek();
-            Attack();
-            Search();
+            if (this.attack)
+            {
+                Seek();
+                Attack();
+            }
+            if (this.search)
+            {
+                Search();
+            }
         }
 
         //Debug keys
@@ -401,11 +412,11 @@ public class Unit : MonoBehaviour
         return Mathf.Abs(Vector3.Distance(target, position)) <= this.range;
     }
 
-    public void Move(Vector3 target)
+    public void Move(Vector3 target, GameObject resource)
     {
         //PathRequestManager.RequestPath(transform.position, target, OnPathFound);
         unitAgent.SetDestination(target);
-        StartMoving();
+        StartMoving(resource);
     }
 
     public void StopMoving()
@@ -414,10 +425,16 @@ public class Unit : MonoBehaviour
         isStopped = true;
     }
 
-    public void StartMoving()
+    public void StartMoving(GameObject obj)
     {
         animator.SetBool("isStopped", false);
         isStopped = false;
+        if (obj != null)
+        {
+            this.villageManager = gameObject.GetComponent<VillagerManager>();
+            Resource resource = obj.GetComponent<InteractableResource>().getResource();
+            this.villageManager.work(resource);
+        }
     }
 
     private void RemoveUnit()

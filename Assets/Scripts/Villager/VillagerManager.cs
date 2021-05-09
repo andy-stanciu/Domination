@@ -4,52 +4,122 @@ using UnityEngine;
 
 public class VillagerManager : MonoBehaviour
 {
+    [HideInInspector]
     public bool isWorking;
+    [HideInInspector]
+    public bool startWorking;
+    [HideInInspector]
     public bool isStopped;
 
+    private bool foundResource;
+    private double nextCollect;
+    private double cooldownTime;
+    private double lastingTime;
+    private string material;
+    private double materialPerTime;
+
     private Animator animator;
-    private Economy script;
+    private Economy economyScript;
+    private MapGeneration mapScript;
+
+    private Resource currentResource;
+
 
     void Awake()
     {
-        //Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        this.startWorking = false;
+        this.foundResource = false;
+        this.economyScript = GameObject.FindGameObjectWithTag("Economy").GetComponent<Economy>();
+        this.mapScript = GameObject.FindGameObjectWithTag("Terrain").GetComponent<MapGeneration>();
     }
 
     // Update is called once per frame
     void Update()
     {
         animator = GetComponent<Animator>();
-        this.script = GameObject.FindGameObjectWithTag("Economy").GetComponent<Economy>();
 
-        /*
-        selectedObject = GameObject.Find("selectedObject")
-        material = selectedObject.getMaterial()
-        cooldownTime = selectedObject.getCoolDownTime()
-        materialPerTime = selectedObject.getMaterialPerTime()
-        */
-        double nextCollect = 0;
-        double cooldownTime = 1;
-        double lastingTime = 100;
-        string material = "wood";
-        double materialPerTime = 1;
-
-        if (animator.GetBool("isWorking") && animator.GetBool("isStopped"))
+        if (currentResource != null)
         {
-            double startingTime = Time.time;
-            nextCollect = Time.time + cooldownTime;
-            while (Time.time < lastingTime + startingTime)
+            if (!this.foundResource && this.startWorking)
             {
-                if (Time.time >= nextCollect)
+                this.material = this.currentResource.getMaterial();
+                this.cooldownTime = this.currentResource.getCoolDownTime();
+                this.materialPerTime = this.currentResource.getMaterialPerTime();
+                this.lastingTime = this.currentResource.getLastingTime();
+                Debug.Log(material);
+                Debug.Log(cooldownTime);
+                Debug.Log(materialPerTime);
+                Debug.Log(lastingTime);
+    
+                this.nextCollect = 0;
+
+                this.foundResource = true;
+            }
+
+            if (!animator.GetBool("isWorking") && animator.GetBool("isStopped"))
+            {
+                Debug.Log("Working");
+                animator.SetBool("isWorking", true);
+                //double startingTime = Time.time;
+                //nextCollect = Time.time + cooldownTime;
+
+                //Debug.Log(this.lastingTime + startingTime);
+                //Debug.Log(startingTime);
+                //Debug.Log(nextCollect);
+                StartCoroutine("collectResource");
+                /*
+                while (Time.time < this.lastingTime + startingTime)
                 {
-                    nextCollect = Time.time + cooldownTime;
-                    this.script.changeMaterial(material, materialPerTime);
+                    Debug.Log("Collecting");
+                    if (Time.time >= nextCollect)
+                    {
+                        nextCollect = Time.time + cooldownTime;
+                        this.economyScript.changeMaterial(material, materialPerTime);
+                    }
                 }
+         
+                animator.SetBool("isWorking", false);
+                this.foundResource = false;
+                this.mapScript.destroyResource(currentResource);
+                this.currentResource = null;
+                this.startWorking = false;
+                */
             }
         }
+    }
+
+    public void work(Resource resource)
+    {
+        this.currentResource = resource;
+        this.startWorking = true; 
+    }
+    
+    IEnumerator collectResource()
+    {
+        double startingTime = Time.time;
+        nextCollect = Time.time + cooldownTime;
+
+        while (Time.time < this.lastingTime + startingTime)
+        {
+            if (Time.time >= nextCollect)
+            {
+                nextCollect = Time.time + cooldownTime;
+                this.economyScript.changeMaterial(material, materialPerTime);
+            }
+            yield return null;
+        }
+
+        animator.SetBool("isWorking", false);
+        this.foundResource = false;
+        this.mapScript.destroyResource(currentResource);
+        this.currentResource = null;
+        this.startWorking = false;
+
+        yield return null;
     }
 }

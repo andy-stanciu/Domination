@@ -5571,7 +5571,7 @@ GameObject:
   - component: {fileID: 1528715724785173886}
   - component: {fileID: -3858588897973618966}
   m_Layer: 8
-  m_Name: Barracks
+  m_Name: barracks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5652,6 +5652,7 @@ MonoBehaviour:
   isGuiOpen: 0
   buttonTags:
   - SpawnLongbowman
+  - SpawnVillager
 --- !u!1 &6091660978170614190
 GameObject:
   m_ObjectHideFlags: 0
