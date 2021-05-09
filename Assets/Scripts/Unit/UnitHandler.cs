@@ -34,9 +34,8 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
-        //CreateUnits(longbowman, 10, 10);
-        CreateUnits(longbowman, 4, 5, zero);
-        //CreateUnits(villager, 5, 4);
+        CreateUnits(longbowman, 4, 5, zero, false);
+        CreateUnits(longbowman, 4, 5, new Vector3(0, 0, -30), true);
     }
 
     void Update()
@@ -56,7 +55,8 @@ public class UnitHandler : MonoBehaviour
                 Unit unit = obj.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    MoveUnit(unit);
+                    //Only moving/tasking the unit if it is the player's unit
+                    if (unit.CompareTag("Player")) MoveUnit(unit);
                 }
             }
         }
@@ -116,7 +116,7 @@ public class UnitHandler : MonoBehaviour
         MoveUnitToNode(unit, destination, unassigned, 0);
     }
 
-    public void CreateUnits(GameObject type, int width, int length, Vector3 position)
+    public void CreateUnits(GameObject type, int width, int length, Vector3 position, bool isOpponent)
     {
         for (int i = 0; i < width; i++)
         {
@@ -130,9 +130,12 @@ public class UnitHandler : MonoBehaviour
 
                 GameObject unitObj = Instantiate(type, loc, type.transform.rotation);
 
+                if (isOpponent) unitObj.tag = "Opponent";
+                else unitObj.tag = "Player";
+
                 Unit unit = unitObj.GetComponent<Unit>();
                 unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
-                unit.InstantiateUnit();
+                unit.InstantiateUnit(isOpponent);
 
                 //Debug.Log("Spawned unit at " + loc);
             }

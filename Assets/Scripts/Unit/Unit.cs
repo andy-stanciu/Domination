@@ -81,10 +81,17 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void InstantiateUnit()
+    public void InstantiateUnit(bool isOpponent)
     {
-        CreateHealthBar();
+        UpdateColor();
+        CreateHealthBar(isOpponent);
         CreateProjectile();
+    }
+
+    private void UpdateColor()
+    {
+        if (this.selectionHandler == null) this.selectionHandler = gameObject.GetComponent<SelectionHandler>();
+        this.selectionHandler.UpdateColor();
     }
 
     private void CreateProjectile()
@@ -96,7 +103,7 @@ public class Unit : MonoBehaviour
         this.projectile.SetActive(false);
     }
 
-    private void CreateHealthBar()
+    private void CreateHealthBar(bool isOpponent)
     {
         this.healthBar = Instantiate(healthBarPrefab, gameObject.transform.position + Vector3.up * unitHeight, healthBarPrefab.transform.rotation);
 
@@ -109,6 +116,7 @@ public class Unit : MonoBehaviour
         this.healthBarTransform = this.healthBar.GetComponent<RectTransform>();
         this.healthBarTransform.localPosition = gameObject.transform.position + Vector3.up * unitHeight;
         this.healthBarChild = this.healthBar.transform.Find("Bar");
+        this.healthBarChild.transform.Find("BarSprite").GetComponent<SpriteRenderer>().color = isOpponent ? Color.red : Color.blue;
 
         //Initializing health to hitpoints
         this.health = this.hitpoints;
@@ -143,7 +151,7 @@ public class Unit : MonoBehaviour
         this.animator = GetComponent<Animator>();
         this.unitAgent = GetComponent<NavMeshAgent>();
         this.selectionManager = Camera.main.GetComponent<SelectionManager>();
-        this.selectionHandler = gameObject.GetComponent<SelectionHandler>();
+        if (this.selectionHandler == null) this.selectionHandler = gameObject.GetComponent<SelectionHandler>();
         this.unitHandler = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
         this.unitCenter = Vector3.up * (unitHeight - 0.6f);
     }
@@ -205,6 +213,8 @@ public class Unit : MonoBehaviour
         {
             GameObject obj = hit.transform.gameObject;
             if (obj.GetInstanceID() == this.gameObject.GetInstanceID()) continue;
+            //Should not search for units of their own team
+            if (obj.CompareTag(this.gameObject.tag)) continue;
 
             float distance = hit.distance;
 
@@ -354,6 +364,7 @@ public class Unit : MonoBehaviour
     public void SetTask(GameObject obj)
     {
         if (this.gameObject.GetInstanceID() == obj.GetInstanceID()) return;
+        if (obj.CompareTag(this.gameObject.tag)) return;
 
         this.target = obj;
         float distance = GetDistanceToTarget();
