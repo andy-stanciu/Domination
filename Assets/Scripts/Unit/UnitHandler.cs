@@ -39,7 +39,7 @@ public class UnitHandler : MonoBehaviour
         CreateUnits(longbowman, 4, 5, new Vector3(0, 0, -30), true);
         //CreateUnits(longbowman, 10, 10, zero);
         //CreateUnits(longbowman, 4, 5, zero);
-        CreateUnits(villager, 5, 4, zero);
+        CreateUnits(villager, 5, 4, zero, false);
     }
 
     void Update()

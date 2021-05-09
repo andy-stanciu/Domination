@@ -1047,8 +1047,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 3747611545745432321}
-  playerColor: {r: 0, g: 0, b: 1, a: 0}
-  opponentColor: {r: 1, g: 0, b: 0, a: 0}
   isSelected: 0
 --- !u!114 &-2912428190340243323
 MonoBehaviour:
