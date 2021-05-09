@@ -1078,6 +1078,8 @@ MonoBehaviour:
   selectableObjectsLayer:
     serializedVersion: 2
     m_Bits: 256
+  attack: 1
+  search: 1
 --- !u!195 &-2838748619235688915
 NavMeshAgent:
   m_ObjectHideFlags: 0

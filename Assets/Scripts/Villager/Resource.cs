@@ -14,15 +14,27 @@ public class Resource
     private float xSize;
     private float zSize;
     private bool interactable;
+    private int id;
 
     public Resource(string material, double coolDownTime, double materialPerTime, double lastingTime, float xSize, float zSize, bool interactable)
     {
         this.material = material;
         this.coolDownTime = coolDownTime;
         this.materialPerTime = materialPerTime;
+        this.lastingTime = lastingTime;
         this.xSize = xSize;
         this.zSize = zSize;
         this.interactable = interactable;
+    }
+
+    public void setID(int id)
+    {
+        this.id = id;
+    }
+
+    public int getID()
+    {
+        return this.id;
     }
 
     public GameObject getGameObject()
@@ -35,7 +47,7 @@ public class Resource
         return this.material;
     }
 
-    public double getcoolDownTime()
+    public double getCoolDownTime()
     {
         return this.coolDownTime;
     }
@@ -48,6 +60,11 @@ public class Resource
     public void changeLastingTime(double time)
     {
         this.lastingTime -= time;
+    }
+
+    public double getLastingTime()
+    {
+        return this.lastingTime;
     }
 
     public bool isOverlapping(float x, float z)
@@ -95,17 +112,17 @@ public class Mine: Resource
 
 public class GreenTree: Resource
 {
-    public GreenTree() : base("wood", 1, 0.5, 30, 8, 8, true) {}
+    public GreenTree() : base("wood", 1, 0.5, 15, 8, 8, true) {}
 }
 
 public class GoldPaddy: Resource
 {
-    public GoldPaddy() : base("gold", 1, 0.34, 100, 2, 2, true) {}
+    public GoldPaddy() : base("gold", 1, 0.34, 30, 2, 2, true) {}
 }
 
 public class FoodPaddy: Resource
 {
-    public FoodPaddy() : base("food", 1, 0.34, 100, 2, 2, true) {}
+    public FoodPaddy() : base("food", 1, 0.34, 30, 2, 2, true) {}
 }
 
 public class Fish: Resource
