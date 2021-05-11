@@ -13,10 +13,11 @@ public class UnitHandler : MonoBehaviour
     private SelectionManager selectionManager;
     private Vector3 zero;
     private Vector3 negInf;
-    private VillagerManager script;
+    private Villager script;
 
     public LayerMask groundLayer;
     public LayerMask selectableLayer;
+    public LayerMask obstacleLayer;
 
     public GameObject archer;
     public GameObject longbowman;
@@ -60,18 +61,18 @@ public class UnitHandler : MonoBehaviour
                 if (unit != null)
                 {
                     //Only moving/tasking the unit if it is the player's unit
-                    if (unit.CompareTag("Player")) MoveUnit(unit, null);
+                    if (unit.CompareTag("Player")) MoveUnit(unit);
                 }
             }
         }
     }
 
-    public void MoveUnit(Unit unit, GameObject resource)
+    public void MoveUnit(Unit unit)
     {
-        MoveUnit(unit, Vector3.zero, resource);
+        MoveUnit(unit, Vector3.zero);
     }
 
-    public void MoveUnit(Unit unit, Vector3 vector, GameObject resource)
+    public void MoveUnit(Unit unit, Vector3 vector)
     {
         Vector3 destination = zero;
 
@@ -81,6 +82,7 @@ public class UnitHandler : MonoBehaviour
         }
         else
         {
+            bool hasTarget = false;
             bool hasTask = false;
 
             RaycastHit rayHit;
@@ -90,21 +92,25 @@ public class UnitHandler : MonoBehaviour
             {
                 destination = rayHit.point;
             }
-            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, selectableLayer)) hasTask = true;
+            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, selectableLayer))
+            {
+                unit.SetTarget(rayHit.transform.root.gameObject);
+                return;
+            }
 
-            if (destination == zero) return;
-
-            if (hasTask)
+            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, obstacleLayer))
             {
                 unit.SetTask(rayHit.transform.root.gameObject);
                 return;
             }
+
+            if (destination == zero) return;
         }
 
-        MoveUnitToNode(unit, destination, true, 0, resource);
+        MoveUnitToNode(unit, destination, true, 0);
     }
 
-    public Vector3 MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned, float minRadius, GameObject resource)
+    public Vector3 MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned, float minRadius)
     {
         Node node = grid.NodeFromWorldPoint(destination);
         if (node.isOccupied)
@@ -124,13 +130,13 @@ public class UnitHandler : MonoBehaviour
         }
 
         if (unassigned) unit.SetState(Unit.State.Unassigned);
-        unit.Move(destination, resource);
+        unit.Move(destination);
         return destination;
     }
 
     public void MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned)
     {
-        MoveUnitToNode(unit, destination, unassigned, 0, null);
+        MoveUnitToNode(unit, destination, unassigned, 0);
     }
 
     public void CreateUnits(GameObject type, int width, int length, Vector3 position, bool isOpponent)

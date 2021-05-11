@@ -4,19 +4,26 @@ using UnityEngine;
 using System;
 
 
-public class Resource
+public class Resource : MonoBehaviour
 {
-    private GameObject gameObject;
+    [SerializeField]
     private string material;
+    [SerializeField]
     private double coolDownTime;
+    [SerializeField]
     private double materialPerTime;
+    [SerializeField]
     private double lastingTime;
+    [SerializeField]
     private float xSize;
+    [SerializeField]
     private float zSize;
+    [SerializeField]
     private bool interactable;
-    private int id;
+    
+    //private int id;
 
-    public Resource(string material, double coolDownTime, double materialPerTime, double lastingTime, float xSize, float zSize, bool interactable)
+    /*public Resource(string material, double coolDownTime, double materialPerTime, double lastingTime, float xSize, float zSize, bool interactable)
     {
         this.material = material;
         this.coolDownTime = coolDownTime;
@@ -25,9 +32,9 @@ public class Resource
         this.xSize = xSize;
         this.zSize = zSize;
         this.interactable = interactable;
-    }
+    }*/
 
-    public void setID(int id)
+    /*public void setID(int id)
     {
         this.id = id;
     }
@@ -35,12 +42,7 @@ public class Resource
     public int getID()
     {
         return this.id;
-    }
-
-    public GameObject getGameObject()
-    {
-        return this.gameObject;
-    }
+    }*/
 
     public String getMaterial()
     {
@@ -83,14 +85,10 @@ public class Resource
     {
         return this.interactable;
     }
-
-    public void setGameObject(GameObject gameObject)
-    {
-        this.gameObject = gameObject;
-    }
 }
 
-public class Sheep: Resource
+//Changing this to parameter-based instead of classes (significantly cleaner in Unity)
+/*public class Sheep: Resource
 {
     public Sheep() : base("food", 1, 2, 10, 3, 3, true) {}
 }
@@ -158,4 +156,4 @@ public class BigRock: Resource
 public class SmallRock: Resource
 {
     public SmallRock() : base(null, 0, 0, 0, 5, 5, false) {}
-}
+}*/

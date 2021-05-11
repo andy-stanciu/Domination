@@ -34,7 +34,11 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private bool attack;
     [SerializeField]
+    private bool seek;
+    [SerializeField]
     private bool search;
+    [SerializeField]
+    private bool canPerformTask;
 
     private int health;
     private State state;
@@ -56,7 +60,7 @@ public class Unit : MonoBehaviour
     private SelectionManager selectionManager;
     private SelectionHandler selectionHandler;
     private UnitHandler unitHandler;
-    private VillagerManager villageManager;
+    private Villager villager;
 
     //private float speed = 5.0f;
     //private Vector3[] path;
@@ -159,6 +163,7 @@ public class Unit : MonoBehaviour
         if (this.selectionHandler == null) this.selectionHandler = gameObject.GetComponent<SelectionHandler>();
         this.unitHandler = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
         this.unitCenter = Vector3.up * (unitHeight - 0.6f);
+        this.villager = gameObject.GetComponent<Villager>();
     }
 
     private void Update()
@@ -177,15 +182,9 @@ public class Unit : MonoBehaviour
         //Unit functions only when they are alive
         if (this.gameObject.layer != 9)
         {
-            if (this.attack)
-            {
-                Seek();
-                Attack();
-            }
-            if (this.search)
-            {
-                Search();
-            }
+            if (this.attack) Attack();
+            if (this.seek) Seek();
+            if (this.search) Search();
         }
 
         //Debug keys
@@ -236,7 +235,7 @@ public class Unit : MonoBehaviour
             }
         }
 
-        if (nearest != null) SetTask(nearest);
+        if (nearest != null) SetTarget(nearest);
     }
 
     private void Seek()
@@ -372,8 +371,9 @@ public class Unit : MonoBehaviour
         return GetDistanceToTarget(transform.position);
     }
 
-    public void SetTask(GameObject obj)
+    public void SetTarget(GameObject obj)
     {
+        if (!this.seek || !this.attack) return;
         if (this.gameObject.GetInstanceID() == obj.GetInstanceID()) return;
         if (obj.CompareTag(this.gameObject.tag)) return;
 
@@ -388,6 +388,20 @@ public class Unit : MonoBehaviour
         {
             this.state = State.Attacking;
         }
+    }
+
+    public void SetTask(GameObject obj)
+    {
+        if (!this.canPerformTask) return;
+
+        Resource resource = obj.GetComponent<Resource>();
+        if (resource == null) return;
+
+        float distance = GetDistanceToTarget(obj.transform.position, transform.position);
+
+        if (distance > this.range) this.unitHandler.MoveUnitToNode(this, obj.transform.position, false);
+        //Eventually make this only be triggered when the villager arrives and begins harvesting the resource
+        this.villager.Work(resource);
     }
 
     private Vector3 GetDirectionVectorToTarget()
@@ -412,11 +426,11 @@ public class Unit : MonoBehaviour
         return Mathf.Abs(Vector3.Distance(target, position)) <= this.range;
     }
 
-    public void Move(Vector3 target, GameObject resource)
+    public void Move(Vector3 target)
     {
         //PathRequestManager.RequestPath(transform.position, target, OnPathFound);
         unitAgent.SetDestination(target);
-        StartMoving(resource);
+        StartMoving();
     }
 
     public void StopMoving()
@@ -425,16 +439,10 @@ public class Unit : MonoBehaviour
         isStopped = true;
     }
 
-    public void StartMoving(GameObject obj)
+    public void StartMoving()
     {
         animator.SetBool("isStopped", false);
         isStopped = false;
-        if (obj != null)
-        {
-            this.villageManager = gameObject.GetComponent<VillagerManager>();
-            Resource resource = obj.GetComponent<InteractableResource>().getResource();
-            this.villageManager.work(resource);
-        }
     }
 
     private void RemoveUnit()

@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 5487047585057294699}
   - component: {fileID: 5476674421853921833}
   - component: {fileID: 5659086938217381591}
-  - component: {fileID: 4306537169623537575}
-  - component: {fileID: 1692253746957484872}
-  m_Layer: 8
+  - component: {fileID: -8678254252567592906}
+  m_Layer: 9
   m_Name: BerryBush
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +110,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5476896268895885535}
   m_Enabled: 1
---- !u!114 &4306537169623537575
+--- !u!114 &-8678254252567592906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,23 +119,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5500561450847261895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68b335fce40d4114d9443239531fdf92, type: 3}
+  m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1692253746957484872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5500561450847261895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70a30a0543cec9a43aca5854b97e5c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 5500561450847261895}
-  isSelected: 0
+  material: food
+  coolDownTime: 1
+  materialPerTime: 0.67
+  lastingTime: 223.880597
+  xSize: 2
+  zSize: 2
+  interactable: 1
 --- !u!1 &5500686520046159439
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +140,7 @@ GameObject:
   - component: {fileID: 5502552258060107261}
   - component: {fileID: 5487221554423042711}
   - component: {fileID: 5476896268895885535}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: bush_02_LOD2(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +219,7 @@ GameObject:
   - component: {fileID: 5502666270975744187}
   - component: {fileID: 5488650910288529193}
   - component: {fileID: 5476649253778373463}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: bush_02_LOD(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

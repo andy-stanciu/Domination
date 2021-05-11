@@ -23,7 +23,7 @@ public class SelectionManager : MonoBehaviour
 
     private new Camera camera;
     private GraphicRaycaster graphicRaycaster;
-    private UnitHandler unitScript;
+    //private UnitHandler unitScript;
 
     void Awake()
     {
@@ -61,11 +61,11 @@ public class SelectionManager : MonoBehaviour
                 }
                 else
                 {
-                    if (rayHit.collider.gameObject.GetComponent<InteractableResource>() != null)
+                    /*if (rayHit.collider.gameObject.GetComponent<InteractableResource>() != null)
                     {
                         foreach (GameObject obj in selectedObjects)
                         {
-                            if (obj.GetComponent<VillagerManager>() != null)
+                            if (obj.GetComponent<Villager>() != null)
                             {
                                 this.unitScript = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
                                 this.unitScript.MoveUnit(obj.GetComponent<Unit>(), new Vector3(rayHit.collider.gameObject.transform.position.x, rayHit.collider.gameObject.transform.position.y, rayHit.collider.gameObject.transform.position.z), rayHit.collider.gameObject);
@@ -74,10 +74,10 @@ public class SelectionManager : MonoBehaviour
                         ClearSelection();
                     }
                     else
-                    {
+                    {*/
                         ClearSelection();
                         AddToSelection(rayHit.collider.gameObject, clicked);
-                    }
+                    //}
                 }
             }
             else

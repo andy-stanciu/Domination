@@ -1129,7 +1129,7 @@ GameObject:
   - component: {fileID: -1569250084741413585}
   - component: {fileID: -7870513021327703846}
   - component: {fileID: 8951643080003022657}
-  - component: {fileID: 688408168574028463}
+  - component: {fileID: 5193289723986260387}
   m_Layer: 8
   m_Name: Villager
   m_TagString: Untagged
@@ -1240,7 +1240,7 @@ MonoBehaviour:
     type: 3}
   hitpoints: 20
   unitHeight: 2
-  range: 5
+  range: 2
   lineOfSight: 10
   rateOfFire: 5
   projectileSpeed: 15
@@ -1251,9 +1251,11 @@ MonoBehaviour:
   selectableObjectsLayer:
     serializedVersion: 2
     m_Bits: 256
-  attack: 0
+  attack: 1
+  seek: 1
   search: 0
---- !u!114 &688408168574028463
+  canPerformTask: 1
+--- !u!114 &5193289723986260387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1262,7 +1264,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6768312720671068373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f689a98f64bc4c61aef6b8eeecaa9b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1779df82a9bc4a94b857889b719eb375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isWorking: 0

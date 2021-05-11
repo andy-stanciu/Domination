@@ -1079,6 +1079,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attack: 1
+  seek: 1
   search: 1
 --- !u!195 &-2838748619235688915
 NavMeshAgent:

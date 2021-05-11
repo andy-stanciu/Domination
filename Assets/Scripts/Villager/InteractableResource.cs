@@ -30,7 +30,7 @@ public class InteractableResource : MonoBehaviour
         this.resourceID = id;
     }
 
-    public Resource getResource()
+    /*public Resource getResource()
     {
         this.mapGeneration = GameObject.FindGameObjectWithTag("Terrain").GetComponent<MapGeneration>();
         List<Resource> resourceList = this.mapGeneration.getResourceList();
@@ -44,5 +44,5 @@ public class InteractableResource : MonoBehaviour
         }
 
         return null;
-    }
+    }*/
 }

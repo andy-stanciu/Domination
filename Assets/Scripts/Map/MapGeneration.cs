@@ -41,10 +41,9 @@ public class MapGeneration : MonoBehaviour
     private float playerZPos;
     private float playerZNeg;
 
-    [HideInInspector]
     private List<Resource> resources;
 
-    private InteractableResource resourceScript;
+    //private InteractableResource resourceScript;
 
     void Awake()
     {
@@ -68,7 +67,7 @@ public class MapGeneration : MonoBehaviour
         int i = 0;
         while (i < 1500)
         {
-            createResource(GreenTree, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new GreenTree(), true);
+            createResource(GreenTree, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, true);
             //createResource(BigRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new BigRock(), false);
             //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new SmallRock(), false);
             //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new SmallRock(), false);
@@ -98,10 +97,10 @@ public class MapGeneration : MonoBehaviour
         this.playerXPos = this.playerXNeg + 10;
         this.playerZPos = this.playerZPos + 10;
 
-        createResource(village, this.playerXNeg, this.playerXPos, this.playerZNeg, this.playerZPos, new Village(), false);
+        //createResource(village, this.playerXNeg, this.playerXPos, this.playerZNeg, this.playerZPos, new Village(), false);
     }
 
-    public void createResource(GameObject type, float xNegLimit, float xPosLimit, float zNegLimit, float zPosLimit, Resource resource, bool collectable)
+    public void createResource(GameObject type, float xNegLimit, float xPosLimit, float zNegLimit, float zPosLimit, bool collectable)
     {
         float x = 0;
         float z = 0;
@@ -132,20 +131,21 @@ public class MapGeneration : MonoBehaviour
         float y = this.terrain.SampleHeight(new Vector3(x, 0, z));
 
         GameObject gameObject = Instantiate(type, new Vector3(x, type.transform.position.y + y, z), Quaternion.Euler(type.transform.rotation.x, Random.Range(0, 360), type.transform.rotation.z));
-        resource.setGameObject(gameObject);
-        this.resources.Add(resource);
-        resource.setID(this.resources.Count);
+        this.resources.Add(gameObject.GetComponent<Resource>());
+
+        //resource.setGameObject(gameObject);
+        //resource.setID(this.resources.Count);
 
         //Debug.Log(resource.getMaterial());
 
-        if (collectable)
+        /*if (collectable)
         {
             this.resourceScript = gameObject.GetComponent<InteractableResource>();
             this.resourceScript.setID(this.resources.Count);
-        }
+        }*/
     }
 
-    public void destroyResource(Resource resource)
+    /*public void destroyResource(Resource resource)
     {
         int resourceID = resource.getID();
 
@@ -162,7 +162,7 @@ public class MapGeneration : MonoBehaviour
     public List<Resource> getResourceList()
     {
         return this.resources;
-    }
+    }*/
 
     public float[] getPlayerStart()
     {
