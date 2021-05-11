@@ -23,6 +23,7 @@ public class SelectionManager : MonoBehaviour
 
     private new Camera camera;
     private GraphicRaycaster graphicRaycaster;
+    //private UnitHandler unitScript;
 
     void Awake()
     {
@@ -60,8 +61,23 @@ public class SelectionManager : MonoBehaviour
                 }
                 else
                 {
-                    ClearSelection();
-                    AddToSelection(rayHit.collider.gameObject, clicked);
+                    /*if (rayHit.collider.gameObject.GetComponent<InteractableResource>() != null)
+                    {
+                        foreach (GameObject obj in selectedObjects)
+                        {
+                            if (obj.GetComponent<Villager>() != null)
+                            {
+                                this.unitScript = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
+                                this.unitScript.MoveUnit(obj.GetComponent<Unit>(), new Vector3(rayHit.collider.gameObject.transform.position.x, rayHit.collider.gameObject.transform.position.y, rayHit.collider.gameObject.transform.position.z), rayHit.collider.gameObject);
+                            }
+                        }
+                        ClearSelection();
+                    }
+                    else
+                    {*/
+                        ClearSelection();
+                        AddToSelection(rayHit.collider.gameObject, clicked);
+                    //}
                 }
             }
             else
@@ -113,7 +129,10 @@ public class SelectionManager : MonoBehaviour
             {
                 if (selectionBox.Contains(camera.WorldToViewportPoint(obj.transform.position), true))
                 {
-                    AddToSelection(obj, obj.GetComponent<SelectionHandler>());
+                    if (obj.GetComponent<InteractableResource>() == null)
+                    {
+                        AddToSelection(obj, obj.GetComponent<SelectionHandler>());
+                    }
                 }
             }
             else
@@ -156,7 +175,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     private void AddToSelection(GameObject obj, SelectionHandler clicked)
-    {
+    { 
         if (clicked == null) return;
 
         selectedObjects.Add(obj);

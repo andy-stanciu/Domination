@@ -12,16 +12,18 @@ public class SelectionHandler : MonoBehaviour
     [HideInInspector]
     public bool isSelected = false;
 
-    void Start()
+    public void UpdateColor()
     {
         Camera.main.gameObject.GetComponent<SelectionManager>().selectableObjects.Add(this.gameObject);
 
         outline = character.AddComponent(typeof(Outline)) as Outline;
         outline.precomputeOutline = true;
         outline.OutlineMode = Outline.Mode.OutlineVisible;
-        outline.OutlineColor = Color.blue;
-        outline.OutlineWidth = 3f;
 
+        if (this.gameObject.CompareTag("Player")) outline.OutlineColor = Color.blue;
+        else outline.OutlineColor = Color.red;
+
+        outline.OutlineWidth = 3f;
         outline.enabled = isSelected;
     }
 

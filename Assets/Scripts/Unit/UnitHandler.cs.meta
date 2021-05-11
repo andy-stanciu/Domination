@@ -4,9 +4,14 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - terrain: {instanceID: 0}
   - archer: {fileID: 6493267999238051414, guid: 695bec8f506c7094a9addf544e4c02d2,
       type: 3}
-  - longbowman: {fileID: 1618307946985622352, guid: 3a209987902767647a8a3dec3a4bb8d3,
+  - longbowman: {fileID: 3747611545745432321, guid: 3a209987902767647a8a3dec3a4bb8d3,
+      type: 3}
+  - villager: {fileID: 6768312720671068373, guid: 5b499af9efa404d9b94412a4c15ee3f3,
+      type: 3}
+  - barracks: {fileID: 6055656228047827795, guid: 0e5acd92a8e063044a8fa8c738ccafef,
       type: 3}
   executionOrder: -12
   icon: {instanceID: 0}

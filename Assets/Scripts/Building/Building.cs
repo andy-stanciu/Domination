@@ -31,7 +31,10 @@ public class Building : MonoBehaviour
         {
             if (buttonTags.Contains(child.gameObject.name)) this.buttons.Add(child);
         }
-        //this.unitSpawnPoint = transform.position - new Vector3(transform.localScale.x, 0, transform.localScale.z);
+
+        //Make this check teams once building placement is implemented
+        this.gameObject.tag = "Player";
+        this.gameObject.GetComponent<SelectionHandler>().UpdateColor();
     }
 
     public void showGui()
@@ -65,7 +68,8 @@ public class Building : MonoBehaviour
                 {
                     this.center = this.grid.NodeFromWorldPoint(transform.position);
                 }
-                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode(center).worldPos);
+                //When the AI can spawn units, make this set to false or true
+                unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode(center).worldPos, false);
                 break;
         }
     }

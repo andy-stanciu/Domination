@@ -20,6 +20,7 @@ public class Economy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(this.wood);
     }
 
     public void changeMaterial(string material, double number)

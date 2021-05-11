@@ -13,9 +13,11 @@ public class UnitHandler : MonoBehaviour
     private SelectionManager selectionManager;
     private Vector3 zero;
     private Vector3 negInf;
+    private Villager script;
 
     public LayerMask groundLayer;
     public LayerMask selectableLayer;
+    public LayerMask obstacleLayer;
 
     public GameObject archer;
     public GameObject longbowman;
@@ -34,9 +36,11 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
-        //CreateUnits(longbowman, 10, 10);
-        CreateUnits(longbowman, 4, 5, zero);
-        //CreateUnits(villager, 5, 4);
+        CreateUnits(longbowman, 4, 5, zero, false);
+        CreateUnits(longbowman, 4, 5, new Vector3(0, 0, -30), true);
+        //CreateUnits(longbowman, 10, 10, zero);
+        //CreateUnits(longbowman, 4, 5, zero);
+        CreateUnits(villager, 5, 4, zero, false);
     }
 
     void Update()
@@ -56,35 +60,54 @@ public class UnitHandler : MonoBehaviour
                 Unit unit = obj.GetComponent<Unit>();
                 if (unit != null)
                 {
-                    MoveUnit(unit);
+                    //Only moving/tasking the unit if it is the player's unit
+                    if (unit.CompareTag("Player")) MoveUnit(unit);
                 }
             }
         }
     }
 
-    private void MoveUnit(Unit unit)
+    public void MoveUnit(Unit unit)
+    {
+        MoveUnit(unit, Vector3.zero);
+    }
+
+    public void MoveUnit(Unit unit, Vector3 vector)
     {
         Vector3 destination = zero;
-        bool hasTask = false;
 
-        RaycastHit rayHit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, groundLayer))
+        if (vector != zero)
         {
-            destination = rayHit.point;
+            destination = vector;
         }
-        if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, selectableLayer)) hasTask = true;
-
-        if (destination == zero) return;
-
-        if (hasTask)
+        else
         {
-            unit.SetTask(rayHit.transform.root.gameObject);
-            return;
+            bool hasTarget = false;
+            bool hasTask = false;
+
+            RaycastHit rayHit;
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, groundLayer))
+            {
+                destination = rayHit.point;
+            }
+            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, selectableLayer))
+            {
+                unit.SetTarget(rayHit.transform.root.gameObject);
+                return;
+            }
+
+            if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, obstacleLayer))
+            {
+                unit.SetTask(rayHit.transform.root.gameObject);
+                return;
+            }
+
+            if (destination == zero) return;
         }
 
-        MoveUnitToNode(unit, destination, true);
+        MoveUnitToNode(unit, destination, true, 0);
     }
 
     public Vector3 MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned, float minRadius)
@@ -116,7 +139,7 @@ public class UnitHandler : MonoBehaviour
         MoveUnitToNode(unit, destination, unassigned, 0);
     }
 
-    public void CreateUnits(GameObject type, int width, int length, Vector3 position)
+    public void CreateUnits(GameObject type, int width, int length, Vector3 position, bool isOpponent)
     {
         for (int i = 0; i < width; i++)
         {
@@ -130,9 +153,12 @@ public class UnitHandler : MonoBehaviour
 
                 GameObject unitObj = Instantiate(type, loc, type.transform.rotation);
 
+                if (isOpponent) unitObj.tag = "Opponent";
+                else unitObj.tag = "Player";
+
                 Unit unit = unitObj.GetComponent<Unit>();
                 unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
-                unit.InstantiateUnit();
+                unit.InstantiateUnit(isOpponent);
 
                 //Debug.Log("Spawned unit at " + loc);
             }
