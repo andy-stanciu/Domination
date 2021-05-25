@@ -782,19 +782,23 @@ MonoBehaviour:
   Factory: {fileID: 9144923882288090664, guid: e2e4a12b179a548918d8c92bfc2fdfba, type: 3}
   GreenTree: {fileID: 4804706081485823925, guid: 5ce7e7f1a3ed941daad2cd389c944857,
     type: 3}
+  TreasureBarrel: {fileID: 8430538084641359094, guid: 04373251bc2959342868e75d6e014729,
+    type: 3}
   Sheep: {fileID: 0}
   Woodmill: {fileID: 0}
-  Plantation: {fileID: 0}
   Mine: {fileID: 0}
-  GoldPaddy: {fileID: 0}
-  FoodPaddy: {fileID: 0}
-  Fish: {fileID: 0}
-  Farm: {fileID: 0}
-  BerryBush: {fileID: 0}
-  village: {fileID: 9187400650546293981, guid: 7e4b7ff3f6cbe4193b98f07ba5e693b8, type: 3}
+  GoldPaddy: {fileID: 1484021429660334, guid: 26675afbcd98ec34ca4128a2365a6d3b, type: 3}
+  FoodPaddy: {fileID: 1680607945850482, guid: c9c5f7181bb1d8842b3327f56dd48f9d, type: 3}
+  BerryBush: {fileID: 9108322756667142832, guid: 8b16db88bcc5c514eb8bd98516132aed,
+    type: 3}
+  Pond: {fileID: 5224444452044053315, guid: 95de48f0c8b20754d8a8b7206b2481fd, type: 3}
+  Village: {fileID: 9187400650546293981, guid: 7e4b7ff3f6cbe4193b98f07ba5e693b8, type: 3}
   BigRock: {fileID: 8360484796199001215, guid: f41e1718c760d46059cd2cb280aed34d, type: 3}
   SmallRock: {fileID: 3973238151397266105, guid: 27104235b4f854240a17b3f2a47aa28f,
     type: 3}
+  GrassFood: {fileID: 1643833713900816, guid: 581db9a4d653c7e42b99f80df69ccbf9, type: 3}
+  GrassGold: {fileID: 1523123762447934, guid: d25cc9fbe2412b145a219619b8913e7d, type: 3}
+  PondGrass: {fileID: 1643833713900816, guid: 30b4b7564be19f6489242253dcd24001, type: 3}
 --- !u!1 &1574574638
 GameObject:
   m_ObjectHideFlags: 0

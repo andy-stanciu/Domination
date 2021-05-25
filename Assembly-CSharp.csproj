@@ -116,7 +116,7 @@
      <Compile Include="Assets\Scripts\Unit\UnitHandler.cs" />
      <Compile Include="Assets\Scripts\Villager\InteractableResource.cs" />
      <Compile Include="Assets\Scripts\Villager\Resource.cs" />
-     <Compile Include="Assets\Scripts\Villager\VillagerManager.cs" />
+     <Compile Include="Assets\Scripts\Villager\Villager.cs" />
      <None Include="Assets\Libraries\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\Libraries\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\Resources\Rocks\Shaders\Blend SM2.shader" />
@@ -133,6 +133,7 @@
      <None Include="Assets\Resources\beffio\Medieval Kingdom\Content\Shaders\beffio_Fire.shader" />
      <None Include="Assets\Libraries\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\Resources\beffio\Medieval Kingdom\Content\Shaders\beffio_Water.shader" />
+     <None Include="Assets\Resources\beffio\Medieval Kingdom\How to Start &amp; Documentation.txt" />
      <None Include="Assets\Resources\Rocks\Shaders\Blend SM3.shader" />
      <None Include="Assets\Resources\beffio\Medieval Kingdom\Content\Shaders\beffio_Parallax.shader" />
      <None Include="Assets\Libraries\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
