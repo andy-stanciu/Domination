@@ -60,6 +60,7 @@ public class Villager : MonoBehaviour
 
         if (!animator.GetBool("isWorking") && animator.GetBool("isStopped"))
         {
+            Debug.Log("Working");
             //Debug.Log("Working");
             animator.SetBool("isWorking", true);
             //double startingTime = Time.time;
@@ -91,6 +92,7 @@ public class Villager : MonoBehaviour
 
     public void Work(Resource resource)
     {
+        Debug.Log("Start Working");
         this.currentResource = resource;
         this.startWorking = true; 
     }

@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8430538084641359095}
-  m_Layer: 0
+  - component: {fileID: -5765090404804259260}
+  m_Layer: 9
   m_Name: Treasure Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8430538084641359094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.459293, y: 7.181944, z: -6.84737}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8426473532293102413}
@@ -33,6 +34,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-5765090404804259260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8430538084641359094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: gold
+  coolDownTime: 1
+  materialPerTime: 5
+  lastingTime: 5
+  xSize: 2
+  zSize: 2
+  interactable: 1
 --- !u!1001 &8430538085078882972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40,9 +60,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8430538084641359095}
     m_Modifications:
+    - target: {fileID: 1149537091933996, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1396238196977004, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
       propertyPath: m_Name
       value: Sack_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1396238196977004, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1823104274268474, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4484654896978656, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
       propertyPath: m_RootOrder
@@ -50,11 +82,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4484654896978656, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.261002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4484654896978656, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.2049994
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4484654896978656, guid: 139a82ca2c394a743ad155ed10e714a1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -107,21 +139,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 1466573413959480, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4381212884748460, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381212884748460, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.350708
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4381212884748460, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.146944
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381212884748460, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.17137003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4381212884748460, guid: a30d32ccc3692a9418274459b15aaf1e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -170,21 +206,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit_box_02
       objectReference: {fileID: 0}
+    - target: {fileID: 1081403357464860, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4049543507558408, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4049543507558408, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.330708
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4049543507558408, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.1119437
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4049543507558408, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.67262983
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4049543507558408, guid: cd11f13ef4965e745821918d680e98cc, type: 3}
       propertyPath: m_LocalRotation.w
