@@ -19,6 +19,8 @@ public class Building : MonoBehaviour
 
     private float buttonPadding = 10;
 
+    private GameUI buildingScript;
+
     void Awake()
     {
         this.ui = GameObject.FindGameObjectWithTag("UI");
@@ -71,6 +73,11 @@ public class Building : MonoBehaviour
                 //When the AI can spawn units, make this set to false or true
                 unitHandler.CreateUnits(unitHandler.longbowman, 1, 1, this.grid.FindNearestAvailableNode(center).worldPos, false);
                 break;
+            /*
+            case "SpawnBuilding":
+                this.buildingScript = GameObject.FindGameObjectWithTag("Tag").GetComponent<Building>();
+                break;
+            */
         }
     }
 
