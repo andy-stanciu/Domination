@@ -46,12 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSize: 2
+  zSize: 2
+  name: TreasureBarrel
   material: gold
   coolDownTime: 1
   materialPerTime: 5
   lastingTime: 5
-  xSize: 2
-  zSize: 2
   interactable: 1
 --- !u!1001 &8430538085078882972
 PrefabInstance:

@@ -301,12 +301,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSize: 8
+  zSize: 8
+  name: Tree
   material: wood
   coolDownTime: 1
   materialPerTime: 0.5
   lastingTime: 15
-  xSize: 8
-  zSize: 8
   interactable: 1
 --- !u!1 &4804706081485823927
 GameObject:

@@ -25,18 +25,25 @@ public class Economy : MonoBehaviour
 
     public void changeMaterial(string material, double number)
     {
-      if (material == "wood")
-      {
-        this.wood += number;
-      }
-      else if (material == "food")
-      {
-        this.food += number;
-      }
-      else
-      {
-        this.gold += number;
-      }
+        if (material == "wood")
+        {
+            this.wood += number;
+        }
+        else if (material == "food")
+        {
+            this.food += number;
+        }
+        else if (material == "gold")
+        {
+            this.gold += number;
+        }
+        else
+        {
+            Debug.Log("All");
+            this.wood += number;
+            this.food += number;
+            this.gold += number;
+        }
     }
 
     public void setWood(int number)

@@ -111,10 +111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSize: 30
+  zSize: 30
+  name: GoldPaddy
   material: gold
   coolDownTime: 1
   materialPerTime: 0.34
   lastingTime: 2147483647
-  xSize: 30
-  zSize: 30
   interactable: 1

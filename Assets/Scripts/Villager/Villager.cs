@@ -92,8 +92,24 @@ public class Villager : MonoBehaviour
 
     public void Work(Resource resource)
     {
-        Debug.Log("Start Working");
         this.currentResource = resource;
+        string resourceName = this.currentResource.getName();
+
+        if (resourceName == "TreasureBarrel" || resourceName == "BerryBush" || resourceName == "Pond")
+        {
+            Debug.Log("Fruit");
+            animator.SetBool("isCollectingFruit", true);
+        }
+        else if (resourceName == "GoldPaddy" || resourceName == "FoodPaddy")
+        {
+            Debug.Log("Farm");
+            animator.SetBool("isFarming", true);
+        }
+        else
+        {
+            Debug.Log("Tree");
+            animator.SetBool("isCollectingTree", true);
+        }
         this.startWorking = true; 
     }
     
@@ -112,7 +128,11 @@ public class Villager : MonoBehaviour
             yield return null;
         }
 
+        
         animator.SetBool("isWorking", false);
+        animator.SetBool("isCollectingTree", false);
+        animator.SetBool("isCollectingFruit", false);
+        animator.SetBool("isFarming", false);
         this.foundResource = false;
         if (this.currentResource != null) Destroy(this.currentResource.gameObject);
         //Probably should also remove it from resource list but for now does not matter
