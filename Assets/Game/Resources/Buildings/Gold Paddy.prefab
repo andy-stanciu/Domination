@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 23810361373592602}
   - component: {fileID: 64408273275209454}
   - component: {fileID: 7579087871155574517}
+  - component: {fileID: -5381032101360576643}
+  - component: {fileID: 8201347536672071267}
   m_Layer: 9
   m_Name: Gold Paddy
   m_TagString: Untagged
@@ -119,3 +121,32 @@ MonoBehaviour:
   materialPerTime: 0.34
   lastingTime: 2147483647
   interactable: 1
+--- !u!65 &-5381032101360576643
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484021429660334}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.944618, y: 8.754824, z: 10.040354}
+  m_Center: {x: 0.027925968, y: 4.344352, z: 0}
+--- !u!208 &8201347536672071267
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1484021429660334}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.472309, y: 4.377412, z: 5.520175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.02792597, y: 4.344352, z: 0}
+  m_TimeToStationary: 0.5

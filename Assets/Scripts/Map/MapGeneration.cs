@@ -58,6 +58,31 @@ public class MapGeneration : MonoBehaviour
         generateMap();
     }
 
+    public void findBounds(GameObject obj)
+    {
+        Bounds bounds = GetBounds(obj);
+        Debug.Log(bounds.center);
+        Debug.Log(bounds.size);
+    }
+
+    Bounds GetBounds(GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            Bounds bounds = renderers[0].bounds;
+            for (int i = 1, ii = renderers.Length; i < ii; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+            return bounds;
+        }
+        else
+        {
+            return new Bounds();
+        }
+    }
 
     public void generateMap()
     {

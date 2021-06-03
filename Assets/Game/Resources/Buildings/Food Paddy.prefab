@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 23660899059245122}
   - component: {fileID: 64145730481517202}
   - component: {fileID: -2922989715118320544}
+  - component: {fileID: -6714862276806233303}
+  - component: {fileID: -527285311526996560}
   m_Layer: 9
   m_Name: Food Paddy
   m_TagString: Untagged
@@ -119,3 +121,32 @@ MonoBehaviour:
   materialPerTime: 0.34
   lastingTime: 2147483647
   interactable: 1
+--- !u!65 &-6714862276806233303
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680607945850482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.944618, y: 8.754824, z: 10.040354}
+  m_Center: {x: 0.027925968, y: 4.344352, z: 0}
+--- !u!208 &-527285311526996560
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680607945850482}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.472309, y: 4.377412, z: 5.520175}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.02792597, y: 4.344352, z: 0}
+  m_TimeToStationary: 0.5

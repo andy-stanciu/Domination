@@ -784,8 +784,6 @@ MonoBehaviour:
     type: 3}
   TreasureBarrel: {fileID: 8430538084641359094, guid: 04373251bc2959342868e75d6e014729,
     type: 3}
-  Sheep: {fileID: 0}
-  Woodmill: {fileID: 0}
   Mine: {fileID: 0}
   GoldPaddy: {fileID: 1484021429660334, guid: 26675afbcd98ec34ca4128a2365a6d3b, type: 3}
   FoodPaddy: {fileID: 1680607945850482, guid: c9c5f7181bb1d8842b3327f56dd48f9d, type: 3}

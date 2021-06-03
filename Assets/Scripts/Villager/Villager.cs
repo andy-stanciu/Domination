@@ -97,17 +97,14 @@ public class Villager : MonoBehaviour
 
         if (resourceName == "TreasureBarrel" || resourceName == "BerryBush" || resourceName == "Pond")
         {
-            Debug.Log("Fruit");
             animator.SetBool("isCollectingFruit", true);
         }
         else if (resourceName == "GoldPaddy" || resourceName == "FoodPaddy")
         {
-            Debug.Log("Farm");
             animator.SetBool("isFarming", true);
         }
         else
         {
-            Debug.Log("Tree");
             animator.SetBool("isCollectingTree", true);
         }
         this.startWorking = true; 
