@@ -21,6 +21,9 @@ public class Building : MonoBehaviour
 
     private GameUI buildingScript;
 
+    public bool isGhost;
+    public bool canPlace;
+
     void Awake()
     {
         this.ui = GameObject.FindGameObjectWithTag("UI");
@@ -85,5 +88,22 @@ public class Building : MonoBehaviour
     {
         foreach (Button button in this.buttons) button.gameObject.SetActive(false);
         this.isGuiOpen = false;
+    }
+    private void OnCollisionEnter(Collider other)
+    {
+        if (isGhost)
+        {
+            if (this.canPlace) this.canPlace = false;
+            //Set albedo to be red so that the building can show that it is unable to be placed there
+        }
+    }
+
+    private void OnCollisionExit(Collider other)
+    {
+        if (isGhost)
+        {
+            if (!this.canPlace) this.canPlace = true;
+            //Set albedo back to normal white
+        }
     }
 }

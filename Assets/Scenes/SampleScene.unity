@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44824815, g: 0.49827522, b: 0.5755823, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 391177543}
   - component: {fileID: 391177545}
   - component: {fileID: 391177544}
+  - component: {fileID: 391177546}
   m_Layer: 5
   m_Name: SpawnBuilding
   m_TagString: Building
@@ -347,12 +348,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: 
+      - m_Target: {fileID: 391177546}
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -408,6 +409,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391177540}
   m_CullTransparentMesh: 0
+--- !u!114 &391177546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aec0fa14f9422489ba830880fdf4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barracksPrefab: {fileID: 6055656228047827795, guid: 0e5acd92a8e063044a8fa8c738ccafef,
+    type: 3}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,7 +961,6 @@ MonoBehaviour:
   TreasureBarrel: {fileID: 8430538084641359094, guid: 04373251bc2959342868e75d6e014729,
     type: 3}
   Sheep: {fileID: 0}
-  Woodmill: {fileID: 0}
   Mine: {fileID: 0}
   GoldPaddy: {fileID: 1484021429660334, guid: 26675afbcd98ec34ca4128a2365a6d3b, type: 3}
   FoodPaddy: {fileID: 1680607945850482, guid: c9c5f7181bb1d8842b3327f56dd48f9d, type: 3}
