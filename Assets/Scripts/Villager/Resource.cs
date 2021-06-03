@@ -12,6 +12,8 @@ public class Resource : MonoBehaviour
     public float zSize;
 
     [SerializeField]
+    private string name;
+    [SerializeField]
     private string material;
     [SerializeField]
     private double coolDownTime;
@@ -45,7 +47,12 @@ public class Resource : MonoBehaviour
         return this.id;
     }*/
 
-    public String getMaterial()
+    public string getName()
+    {
+        return this.name;
+    }
+
+    public string getMaterial()
     {
         return this.material;
     }

@@ -271,8 +271,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.2990096, y: 11.651536, z: 2.23273}
-  m_Center: {x: -0.06395966, y: 5.3662734, z: 0.08291617}
+  m_Size: {x: 15, y: 20, z: 15}
+  m_Center: {x: 0, y: 10, z: 0}
 --- !u!208 &4355886494338311032
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -283,11 +283,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1.149505, y: 5.82577, z: 1.116365}
+  m_Extents: {x: 7.5, y: 10, z: 7.5}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: -0.06395966, y: 5.366273, z: 0.08291617}
+  m_Center: {x: 0, y: 10, z: 0}
   m_TimeToStationary: 0.5
 --- !u!114 &1659020474938021963
 MonoBehaviour:
@@ -301,12 +301,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17372068828554e8e951779f56c5d7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xSize: 8
+  zSize: 8
+  name: Tree
   material: wood
   coolDownTime: 1
   materialPerTime: 0.5
   lastingTime: 15
-  xSize: 8
-  zSize: 8
   interactable: 1
 --- !u!1 &4804706081485823927
 GameObject:

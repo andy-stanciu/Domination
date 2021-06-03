@@ -16,7 +16,6 @@ public class MapGeneration : MonoBehaviour
     public GameObject TreasureBarrel;
 
     //Need to implement prefabs
-    public GameObject Sheep;
     public GameObject Mine;
     public GameObject GoldPaddy;
     public GameObject FoodPaddy;
@@ -59,6 +58,31 @@ public class MapGeneration : MonoBehaviour
         generateMap();
     }
 
+    public void findBounds(GameObject obj)
+    {
+        Bounds bounds = GetBounds(obj);
+        Debug.Log(bounds.center);
+        Debug.Log(bounds.size);
+    }
+
+    Bounds GetBounds(GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            Bounds bounds = renderers[0].bounds;
+            for (int i = 1, ii = renderers.Length; i < ii; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+            return bounds;
+        }
+        else
+        {
+            return new Bounds();
+        }
+    }
 
     public void generateMap()
     {
@@ -173,22 +197,6 @@ public class MapGeneration : MonoBehaviour
             zCenter = gameObject.transform.position.z;
 
             generateGrass(grassType, xCenter, zCenter, 6, 13);
-        }
-
-        if (type == Pond)
-        {
-            for (int i = 0; i < type.transform.childCount; i++)
-            {
-                Transform currentChild = type.transform.GetChild(i);
-                Debug.Log(currentChild.transform.position.y);
-
-                float xPos = currentChild.transform.position.x;
-                float zPos = currentChild.transform.position.z;
-                Debug.Log(this.terrain.SampleHeight(new Vector3(x, 0, z)) + type.transform.position.y);
-
-                currentChild.transform.position = new Vector3(xPos, this.terrain.SampleHeight(new Vector3(xPos, 0, zPos)), zPos);
-                Debug.Log(currentChild.transform.position.y);
-            }
         }
     }
     
