@@ -5605,8 +5605,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 6055656228047827795}
-  playerColor: {r: 0, g: 0, b: 1, a: 0}
-  opponentColor: {r: 1, g: 0, b: 0, a: 0}
   isSelected: 0
 --- !u!65 &677079986340256764
 BoxCollider:

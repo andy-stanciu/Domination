@@ -69,23 +69,6 @@ public class Villager : MonoBehaviour
             //Debug.Log(startingTime);
             //Debug.Log(nextCollect);
             StartCoroutine("CollectResource");
-            /*
-            while (Time.time < this.lastingTime + startingTime)
-            {
-                Debug.Log("Collecting");
-                if (Time.time >= nextCollect)
-                {
-                    nextCollect = Time.time + cooldownTime;
-                    this.economyScript.changeMaterial(material, materialPerTime);
-                }
-            }
-         
-            animator.SetBool("isWorking", false);
-            this.foundResource = false;
-            this.mapScript.destroyResource(currentResource);
-            this.currentResource = null;
-            this.startWorking = false;
-            */
         }
     }
 

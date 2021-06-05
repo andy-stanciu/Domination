@@ -14,6 +14,7 @@ public class UnitHandler : MonoBehaviour
     private Vector3 zero;
     private Vector3 negInf;
     private Villager script;
+    private System.Random random;
 
     public LayerMask groundLayer;
     public LayerMask selectableLayer;
@@ -32,12 +33,13 @@ public class UnitHandler : MonoBehaviour
         selectionManager = camera.GetComponent<SelectionManager>();
         zero = Vector3.zero;
         negInf = Vector3.negativeInfinity;
+        this.random = new System.Random();
     }
 
     void Start()
     {
-        CreateUnits(longbowman, 4, 5, zero, false);
-        CreateUnits(longbowman, 4, 5, new Vector3(0, 0, -30), true);
+        CreateUnits(longbowman, 5, 4, zero, false);
+        CreateUnits(longbowman, 5, 4, new Vector3(0, 0, -20), true);
         //CreateUnits(longbowman, 10, 10, zero);
         //CreateUnits(longbowman, 4, 5, zero);
         CreateUnits(villager, 5, 4, zero, false);
@@ -49,6 +51,11 @@ public class UnitHandler : MonoBehaviour
         {
             RightClickNode();
         }
+    }
+
+    public int GetMeleeRandom()
+    {
+        return this.random.Next(1, 6);
     }
 
     private void RightClickNode()
@@ -82,9 +89,6 @@ public class UnitHandler : MonoBehaviour
         }
         else
         {
-            bool hasTarget = false;
-            bool hasTask = false;
-
             RaycastHit rayHit;
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
@@ -134,9 +138,9 @@ public class UnitHandler : MonoBehaviour
         return destination;
     }
 
-    public void MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned)
+    public Vector3 MoveUnitToNode(Unit unit, Vector3 destination, bool unassigned)
     {
-        MoveUnitToNode(unit, destination, unassigned, 0);
+        return MoveUnitToNode(unit, destination, unassigned, 0);
     }
 
     public void CreateUnits(GameObject type, int width, int length, Vector3 position, bool isOpponent)

@@ -34,7 +34,7 @@ public class Building : MonoBehaviour
 
         //Make this check teams once building placement is implemented
         this.gameObject.tag = "Player";
-        this.gameObject.GetComponent<SelectionHandler>().UpdateColor();
+        this.gameObject.GetComponent<SelectionHandler>().UpdateColor(Color.blue);
     }
 
     public void showGui()

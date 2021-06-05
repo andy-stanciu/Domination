@@ -28,6 +28,10 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private int rangedDamage;
     [SerializeField]
+    private int meleeDamage;
+    [SerializeField]
+    private float meleeRange;
+    [SerializeField]
     private LayerMask obstacleLayer;
     [SerializeField]
     private LayerMask selectableObjectsLayer;
@@ -50,6 +54,7 @@ public class Unit : MonoBehaviour
     private Transform projectileTransform;
     private Transform healthBarChild;
     private bool isShooting;
+    private bool isMelee;
     private bool isProjectileMoving;
     private Vector3 unitCenter;
     private DateTime checkNearbyTime = DateTime.MinValue;
@@ -61,6 +66,7 @@ public class Unit : MonoBehaviour
     private SelectionHandler selectionHandler;
     private UnitHandler unitHandler;
     private Villager villager;
+    private SkinnedMeshRenderer alphaPrefab;
 
     //private float speed = 5.0f;
     //private Vector3[] path;
@@ -100,7 +106,18 @@ public class Unit : MonoBehaviour
     private void UpdateColor()
     {
         if (this.selectionHandler == null) this.selectionHandler = gameObject.GetComponent<SelectionHandler>();
-        this.selectionHandler.UpdateColor();
+
+        Color color = Color.red;
+        if (this.gameObject.CompareTag("Player")) color = Color.blue;
+
+        this.selectionHandler.UpdateColor(color);
+        SetAlpha(color);
+    }
+
+    private void SetAlpha(Color color)
+    {
+        if (this.alphaPrefab == null) this.alphaPrefab = this.transform.Find("Erika_Archer_Meshes").transform.Find("Erika_Archer_Clothes_Mesh").GetComponent<SkinnedMeshRenderer>();
+        this.alphaPrefab.material.color = color;
     }
 
     private void CreateProjectile()
@@ -151,7 +168,10 @@ public class Unit : MonoBehaviour
             return;
         }
 
-        this.healthBarChild.localScale = new Vector3(GetHealthPercent(), 1);
+        if (this.healthBarChild != null)
+        {
+            this.healthBarChild.localScale = new Vector3(GetHealthPercent(), 1);
+        }
     }
 
     void Start()
@@ -260,16 +280,26 @@ public class Unit : MonoBehaviour
         if (distance <= this.range)
         {
             this.state = State.Attacking;
+            //this.unitAgent.isStopped = true;
             return;
         }
 
         if (!IsWithinRange(this.target.transform.position, this.seekDestination))
         {
-            //fix this
-            //adding + 1 for now
             this.seekDestination = transform.position + GetDirectionVectorToTarget() * (distance - range + 1);
-            this.unitHandler.MoveUnitToNode(this, this.seekDestination, false);
-            //this.seekDestination = this.unitHandler.MoveUnitToNode(this, this.target.transform.position, false, this.range);
+            Vector3 attemptedDestination = this.unitHandler.MoveUnitToNode(this, this.seekDestination, false);
+
+            //Testing this out
+            //While to keep recalculating position to move to if all the positions are occupied
+            //This would usually cause the unit to be stuck out of range, but here it is being recalculated so that it can move in range to shoot
+            int i = 1;
+            while (this.target != null && 
+                GetDistanceToTarget(attemptedDestination, this.target.transform.position) > this.range)
+            {
+                this.seekDestination = transform.position + GetDirectionVectorToTarget() * (distance - range + 1 + i);
+                attemptedDestination = this.unitHandler.MoveUnitToNode(this, this.seekDestination, false);
+                i++;
+            }
         }
     }
 
@@ -281,6 +311,11 @@ public class Unit : MonoBehaviour
             {
                 StopCoroutine("Shoot");
                 this.isShooting = false;
+            }
+            if (this.isMelee)
+            {
+                StopCoroutine("Melee");
+                this.isMelee = false;
             }
             return;
         }
@@ -307,17 +342,47 @@ public class Unit : MonoBehaviour
         }
 
         //Stop movement before unit can shoot
-        /*if (!this.isStopped)
+        if (!this.isStopped)
         {
             this.unitAgent.isStopped = true;
             StopMoving();
-        }*/
+        }
 
         this.gameObject.transform.rotation = Quaternion.LookRotation(GetDirectionVectorToTarget());
 
-        if (!isShooting)
+        if (distance >= this.meleeRange)
         {
-            StartCoroutine("Shoot");
+            if (!isShooting) StartCoroutine("Shoot");
+            if (isMelee)
+            {
+                StopCoroutine("Melee");
+                this.isMelee = false;
+            }
+        }
+        else
+        {
+            if (!isMelee) StartCoroutine("Melee");
+            if (isShooting)
+            {
+                StopCoroutine("Shoot");
+                this.isShooting = false;
+            }
+        }
+    }
+
+    private IEnumerator Melee()
+    {
+        for (;;)
+        {
+            this.isMelee = true;
+            int meleeType = this.unitHandler.GetMeleeRandom();
+            this.animator.SetTrigger("Melee");
+            this.animator.SetInteger("MeleeType", meleeType);
+
+            Unit targetUnit = this.target.GetComponent<Unit>();
+            if (targetUnit != null) targetUnit.Damage(this.meleeDamage);
+
+            yield return new WaitForSeconds(6f / this.rateOfFire);
         }
     }
 
@@ -337,27 +402,39 @@ public class Unit : MonoBehaviour
         //Delaying the release of the arrow so that it is in sync with the bow animation
         yield return new WaitForSeconds(0.45f);
 
-        this.projectileTransform.position = gameObject.transform.position + this.unitCenter;
-        this.projectileTransform.rotation = gameObject.transform.rotation;
-        this.projectile.SetActive(true);
-
-        while (GetDistanceToTarget(this.target.transform.position + Vector3.up * (this.unitHeight - 1), this.projectileTransform.position) > 1)
+        if (this.target != null && this.projectileTransform != null)
         {
-            this.isProjectileMoving = true;
+            this.projectileTransform.position = gameObject.transform.position + this.unitCenter;
+            this.projectileTransform.rotation = gameObject.transform.rotation;
+            this.projectile.SetActive(true);
 
-            Vector3 directionVector = GetDirectionVectorToTargetCenter();
 
-            this.projectileTransform.rotation = Quaternion.LookRotation(directionVector);
-            this.projectileTransform.position += directionVector * this.projectileSpeed * Time.deltaTime;
-            yield return null;
+            while (this.target != null && this.projectileTransform != null && 
+                GetDistanceToTarget(this.target.transform.position + Vector3.up * (this.unitHeight - 1), this.projectileTransform.position) > 1)
+            {
+                this.isProjectileMoving = true;
+
+                Vector3 directionVector = GetDirectionVectorToTargetCenter();
+
+                this.projectileTransform.rotation = Quaternion.LookRotation(directionVector);
+                this.projectileTransform.position += directionVector * this.projectileSpeed * Time.deltaTime;
+                yield return null;
+            }
         }
 
         StopCoroutine("AnimateProjectile");
-        this.projectile.SetActive(false);
-        this.isProjectileMoving = false;
+        
+        if (this.projectile != null)
+        {
+            this.projectile.SetActive(false);
+            this.isProjectileMoving = false;
+        }
 
-        Unit targetUnit = this.target.GetComponent<Unit>();
-        if (targetUnit != null) targetUnit.Damage(this.rangedDamage);
+        if (this.target != null)
+        {
+            Unit targetUnit = this.target.GetComponent<Unit>();
+            if (targetUnit != null) targetUnit.Damage(this.rangedDamage);
+        }
     }
 
     private float GetDistanceToTarget(Vector3 target, Vector3 from)
@@ -430,6 +507,8 @@ public class Unit : MonoBehaviour
     {
         //PathRequestManager.RequestPath(transform.position, target, OnPathFound);
         unitAgent.SetDestination(target);
+        //Clearing target if there is one
+        this.target = null;
         StartMoving();
     }
 
@@ -465,6 +544,7 @@ public class Unit : MonoBehaviour
         if (this.state == State.Attacking)
         {
             StopCoroutine("Shoot");
+            StopCoroutine("Melee");
             StopCoroutine("AnimateProjectile");
         }
 
@@ -478,7 +558,7 @@ public class Unit : MonoBehaviour
         //By giving the unit velocity in the direction that they are moving, the death looks realistic
         NavMeshAgent unitAgent = gameObject.GetComponent<NavMeshAgent>();
         unitAgent.stoppingDistance = 2;
-        unitAgent.SetDestination(gameObject.transform.position + unitAgent.velocity * 1.5f);
+        unitAgent.SetDestination(gameObject.transform.position + unitAgent.velocity * 0.5f);
 
         //Destroying the unit after a bit of time
         Destroy(gameObject, 8f);
