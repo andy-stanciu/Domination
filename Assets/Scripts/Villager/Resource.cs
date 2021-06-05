@@ -7,6 +7,13 @@ using System;
 public class Resource : MonoBehaviour
 {
     [SerializeField]
+    public float xSize;
+    [SerializeField]
+    public float zSize;
+
+    [SerializeField]
+    private string name;
+    [SerializeField]
     private string material;
     [SerializeField]
     private double coolDownTime;
@@ -14,10 +21,6 @@ public class Resource : MonoBehaviour
     private double materialPerTime;
     [SerializeField]
     private double lastingTime;
-    [SerializeField]
-    private float xSize;
-    [SerializeField]
-    private float zSize;
     [SerializeField]
     private bool interactable;
     
@@ -44,7 +47,12 @@ public class Resource : MonoBehaviour
         return this.id;
     }*/
 
-    public String getMaterial()
+    public string getName()
+    {
+        return this.name;
+    }
+
+    public string getMaterial()
     {
         return this.material;
     }

@@ -13,23 +13,23 @@ public class MapGeneration : MonoBehaviour
     // Implemented Prefabs
     public GameObject Factory;
     public GameObject GreenTree;
+    public GameObject TreasureBarrel;
 
     //Need to implement prefabs
-    public GameObject Sheep;
-    public GameObject Woodmill;
-    public GameObject Plantation;
     public GameObject Mine;
     public GameObject GoldPaddy;
     public GameObject FoodPaddy;
-    public GameObject Fish;
-    public GameObject Farm;
     public GameObject BerryBush;
+    public GameObject Pond;
 
 
     // Not resource
-    public GameObject village;
+    public GameObject Village;
     public GameObject BigRock;
     public GameObject SmallRock;
+    public GameObject GrassFood;
+    public GameObject GrassGold;
+    public GameObject PondGrass;
 
     private float xPosBoundary;
     private float xNegBoundary;
@@ -47,47 +47,91 @@ public class MapGeneration : MonoBehaviour
 
     void Awake()
     {
-        this.xPosBoundary = 250;
-        this.xNegBoundary = -250;
-        this.zPosBoundary = 250;
-        this.zNegBoundary = -250;
+        this.xPosBoundary = 230;
+        this.xNegBoundary = -230;
+        this.zPosBoundary = 230;
+        this.zNegBoundary = -230;
 
         this.resources = new List<Resource>();
 
         generatePlayerStart();
-        generateNature();
-        generateBushes();
-        generateResourceBuildings();
-        generateAnimals();
+        generateMap();
     }
 
+    public void findBounds(GameObject obj)
+    {
+        Bounds bounds = GetBounds(obj);
+        Debug.Log(bounds.center);
+        Debug.Log(bounds.size);
+    }
 
-    public void generateNature()
+    Bounds GetBounds(GameObject prefab)
+    {
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length > 0)
+        {
+            Bounds bounds = renderers[0].bounds;
+            for (int i = 1, ii = renderers.Length; i < ii; i++)
+            {
+                bounds.Encapsulate(renderers[i].bounds);
+            }
+            return bounds;
+        }
+        else
+        {
+            return new Bounds();
+        }
+    }
+
+    public void generateMap()
     {
         int i = 0;
         while (i < 1500)
         {
-            createResource(GreenTree, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, true);
-            //createResource(BigRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new BigRock(), false);
-            //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new SmallRock(), false);
-            //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary, new SmallRock(), false);
+            createResource(GreenTree, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+            //createResource(BigRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+            //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+            //createResource(SmallRock, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+
+            if (i % 5 == 0)
+            {
+                createResource(BerryBush, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+            }
+
+            if (i % 10 == 0)
+            {
+                generateResourceBuildings();
+                createResource(TreasureBarrel, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+            }
+
+            if (i % 50 == 0)
+            {
+                createResource(Pond, this.xNegBoundary, this.xPosBoundary, this.xNegBoundary, this.zPosBoundary);
+            }
+
             i++;
         }
     }
 
-    public void generateBushes()
-    {
-
-    }
-
     public void generateResourceBuildings()
     {
+       int paddyType = Random.Range(0, 2);
 
-    }
+        if (paddyType == 0)
+        {
+            createResource(GoldPaddy, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+        }
+        else
+        {
+            createResource(FoodPaddy, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+        }
 
-    public void generateAnimals()
-    {
-
+        int spawnMine = Random.Range(0, 3);
+        if (spawnMine == 0)
+        {
+            //createResource(Mine, this.xNegBoundary, this.xPosBoundary, this.zNegBoundary, this.zPosBoundary);
+        }
     }
 
     public void generatePlayerStart()
@@ -97,16 +141,21 @@ public class MapGeneration : MonoBehaviour
         this.playerXPos = this.playerXNeg + 10;
         this.playerZPos = this.playerZPos + 10;
 
-        //createResource(village, this.playerXNeg, this.playerXPos, this.playerZNeg, this.playerZPos, new Village(), false);
+        //createResource(Village, this.playerXNeg, this.playerXPos, this.playerZNeg, this.playerZPos);
     }
 
-    public void createResource(GameObject type, float xNegLimit, float xPosLimit, float zNegLimit, float zPosLimit, bool collectable)
+    public void createResource(GameObject type, float xNegLimit, float xPosLimit, float zNegLimit, float zPosLimit)
     {
         float x = 0;
         float z = 0;
+        float xSize = 0;
+        float zSize = 0;
+        float xCenter = 0;
+        float zCenter = 0;
         bool randomizing = true;
+        GameObject grassType = null;
 
-        while(randomizing)
+        while (randomizing)
         {
             bool overlapped = false;
 
@@ -133,36 +182,43 @@ public class MapGeneration : MonoBehaviour
         GameObject gameObject = Instantiate(type, new Vector3(x, type.transform.position.y + y, z), Quaternion.Euler(type.transform.rotation.x, Random.Range(0, 360), type.transform.rotation.z));
         this.resources.Add(gameObject.GetComponent<Resource>());
 
-        //resource.setGameObject(gameObject);
-        //resource.setID(this.resources.Count);
-
-        //Debug.Log(resource.getMaterial());
-
-        /*if (collectable)
+        if (type == GoldPaddy || type == FoodPaddy)
         {
-            this.resourceScript = gameObject.GetComponent<InteractableResource>();
-            this.resourceScript.setID(this.resources.Count);
-        }*/
-    }
-
-    /*public void destroyResource(Resource resource)
-    {
-        int resourceID = resource.getID();
-
-        for (int i = 0; i < this.resources.Count; i++)
-        {
-            if (this.resources[i].getID() == resourceID)
+            if (type == GoldPaddy)
             {
-                Destroy(resource.getGameObject());
-                this.resources.RemoveAt(i);
+                grassType = GrassGold;
+            }
+            else
+            {
+                grassType = GrassFood;
+            }
+
+            xCenter = gameObject.transform.position.x;
+            zCenter = gameObject.transform.position.z;
+
+            generateGrass(grassType, xCenter, zCenter, 6, 13);
+        }
+    }
+    
+    public void generateGrass(GameObject grass, float xCenter, float zCenter, int xSize, int zSize)
+    {
+        float xStart = xCenter - xSize / 2;
+        float zStart = zCenter - zSize / 2;
+        for (int i = 0; i < xSize; i++)
+        {
+            for (int ii = 0; ii < zSize; ii++)
+            {
+                float y = this.terrain.SampleHeight(new Vector3(xStart + i, 0, zStart + ii));
+                Instantiate(grass, new Vector3(xStart + i, grass.transform.position.y + y, zStart + ii), Quaternion.Euler(grass.transform.rotation.x, Random.Range(0, 360), grass.transform.rotation.z));
+
+                /*
+                float negative = Mathf.Pow(-1, ii);
+                float y = this.terrain.SampleHeight(new Vector3(xCenter + i * negative, 0, zCenter + ii * negative));
+                Instantiate(grass, new Vector3(xCenter+i*negative, grass.transform.position.y + y, zCenter+ii*negative), Quaternion.Euler(grass.transform.rotation.x, Random.Range(0, 360), grass.transform.rotation.z));
+                */
             }
         }
     }
-
-    public List<Resource> getResourceList()
-    {
-        return this.resources;
-    }*/
 
     public float[] getPlayerStart()
     {

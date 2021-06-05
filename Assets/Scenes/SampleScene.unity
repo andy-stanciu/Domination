@@ -265,6 +265,167 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   building: {fileID: 0}
   action: 
+--- !u!1 &391177540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391177541}
+  - component: {fileID: 391177542}
+  - component: {fileID: 391177543}
+  - component: {fileID: 391177545}
+  - component: {fileID: 391177544}
+  - component: {fileID: 391177546}
+  m_Layer: 5
+  m_Name: SpawnBuilding
+  m_TagString: Building
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &391177541
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1794671451}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &391177542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 391177544}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 391177546}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &391177543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761bf52e69f777c44a8244956f2f8aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
+--- !u!114 &391177544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1e10a1408b70deb45bc5ce1a7e1f9272, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &391177545
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_CullTransparentMesh: 0
+--- !u!114 &391177546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391177540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aec0fa14f9422489ba830880fdf4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barracksPrefab: {fileID: 6055656228047827795, guid: 0e5acd92a8e063044a8fa8c738ccafef,
+    type: 3}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,6 +533,7 @@ GameObject:
   - component: {fileID: 963194230}
   - component: {fileID: 963194231}
   - component: {fileID: 963194232}
+  - component: {fileID: 963194233}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -509,6 +671,20 @@ MonoBehaviour:
   terrain: {fileID: 1532234980}
   barracks: {fileID: 6055656228047827795, guid: 0e5acd92a8e063044a8fa8c738ccafef,
     type: 3}
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761bf52e69f777c44a8244956f2f8aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 391177542}
 --- !u!1 &1111935769
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,19 +958,22 @@ MonoBehaviour:
   Factory: {fileID: 9144923882288090664, guid: e2e4a12b179a548918d8c92bfc2fdfba, type: 3}
   GreenTree: {fileID: 4804706081485823925, guid: 5ce7e7f1a3ed941daad2cd389c944857,
     type: 3}
+  TreasureBarrel: {fileID: 8430538084641359094, guid: 04373251bc2959342868e75d6e014729,
+    type: 3}
   Sheep: {fileID: 0}
-  Woodmill: {fileID: 0}
-  Plantation: {fileID: 0}
   Mine: {fileID: 0}
-  GoldPaddy: {fileID: 0}
-  FoodPaddy: {fileID: 0}
-  Fish: {fileID: 0}
-  Farm: {fileID: 0}
-  BerryBush: {fileID: 0}
-  village: {fileID: 9187400650546293981, guid: 7e4b7ff3f6cbe4193b98f07ba5e693b8, type: 3}
+  GoldPaddy: {fileID: 1484021429660334, guid: 26675afbcd98ec34ca4128a2365a6d3b, type: 3}
+  FoodPaddy: {fileID: 1680607945850482, guid: c9c5f7181bb1d8842b3327f56dd48f9d, type: 3}
+  BerryBush: {fileID: 9108322756667142832, guid: 8b16db88bcc5c514eb8bd98516132aed,
+    type: 3}
+  Pond: {fileID: 5224444452044053315, guid: 95de48f0c8b20754d8a8b7206b2481fd, type: 3}
+  Village: {fileID: 9187400650546293981, guid: 7e4b7ff3f6cbe4193b98f07ba5e693b8, type: 3}
   BigRock: {fileID: 8360484796199001215, guid: f41e1718c760d46059cd2cb280aed34d, type: 3}
   SmallRock: {fileID: 3973238151397266105, guid: 27104235b4f854240a17b3f2a47aa28f,
     type: 3}
+  GrassFood: {fileID: 1643833713900816, guid: 581db9a4d653c7e42b99f80df69ccbf9, type: 3}
+  GrassGold: {fileID: 1523123762447934, guid: d25cc9fbe2412b145a219619b8913e7d, type: 3}
+  PondGrass: {fileID: 1643833713900816, guid: 30b4b7564be19f6489242253dcd24001, type: 3}
 --- !u!1 &1574574638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,6 +1217,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 159828444}
+  - {fileID: 391177541}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
