@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NodeGrid : MonoBehaviour
 {
@@ -140,17 +141,24 @@ public class NodeGrid : MonoBehaviour
 
     public Node GetCardinalNode(int nodeX, int nodeY, int x, int y)
     {
-        Node nearby = grid[nodeX + x, nodeY + y];
-        if (!nearby.isOccupied && nearby.walkable) return nearby;
+        try
+        {
+            Node nearby = grid[nodeX + x, nodeY + y];
+            if (!nearby.isOccupied && nearby.walkable) return nearby;
 
-        nearby = grid[nodeX + x, nodeY - y];
-        if (!nearby.isOccupied && nearby.walkable) return nearby;
+            nearby = grid[nodeX + x, nodeY - y];
+            if (!nearby.isOccupied && nearby.walkable) return nearby;
 
-        nearby = grid[nodeX - x, nodeY + y];
-        if (!nearby.isOccupied && nearby.walkable) return nearby;
+            nearby = grid[nodeX - x, nodeY + y];
+            if (!nearby.isOccupied && nearby.walkable) return nearby;
 
-        nearby = grid[nodeX - x, nodeY - y];
-        if (!nearby.isOccupied && nearby.walkable) return nearby;
+            nearby = grid[nodeX - x, nodeY - y];
+            if (!nearby.isOccupied && nearby.walkable) return nearby;
+        }
+        catch (IndexOutOfRangeException e)
+        {
+            return null;
+        }
 
         return null;
     }
@@ -172,6 +180,25 @@ public class NodeGrid : MonoBehaviour
                 if (walkable) walkable = !Physics.CheckSphere(worldPoint, nodeRadius, obstacles);
 
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
+            }
+        }
+    }
+
+    public void UpdateGrid(Vector3 point1, Vector3 point2)
+    {
+        Node node1 = NodeFromWorldPoint(point1);
+        Node node2 = NodeFromWorldPoint(point2);
+
+        for (int x = node1.gridX; x <= node2.gridX; x++)
+        {
+            for (int y = node1.gridY; y <= node2.gridY; y++)
+            {
+                Node currentNode = this.grid[x, y];
+
+                bool walkable = !Physics.CheckCapsule(currentNode.worldPos, currentNode.worldPos + new Vector3(1, 10, 1) * nodeDiameter, nodeRadius, selectableObjects);
+                if (walkable) walkable = !Physics.CheckCapsule(currentNode.worldPos, currentNode.worldPos + new Vector3(1, 10, 1) * nodeDiameter, nodeRadius, obstacles);
+
+                currentNode.walkable = walkable;
             }
         }
     }

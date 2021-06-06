@@ -11,7 +11,7 @@ public class Villager : MonoBehaviour
     [HideInInspector]
     public bool isStopped;
 
-    private bool foundResource;
+    public bool foundResource;
     private double nextCollect;
     private double cooldownTime;
     private double lastingTime;
@@ -22,8 +22,8 @@ public class Villager : MonoBehaviour
     private Economy economyScript;
     //private MapGeneration mapScript;
 
-    private Resource currentResource;
-
+    public Resource currentResource;
+    private bool isOpponent;
 
     void Awake()
     {
@@ -35,6 +35,11 @@ public class Villager : MonoBehaviour
         this.economyScript = GameObject.FindGameObjectWithTag("Economy").GetComponent<Economy>();
         //this.mapScript = GameObject.FindGameObjectWithTag("Terrain").GetComponent<MapGeneration>();
         this.animator = GetComponent<Animator>();
+    }
+
+    public void SetTeam(bool isOpponent)
+    {
+        this.isOpponent = isOpponent;
     }
 
     // Update is called once per frame
@@ -60,7 +65,7 @@ public class Villager : MonoBehaviour
 
         if (!animator.GetBool("isWorking") && animator.GetBool("isStopped"))
         {
-            Debug.Log("Working");
+            //Debug.Log("Working");
             //Debug.Log("Working");
             animator.SetBool("isWorking", true);
             //double startingTime = Time.time;
@@ -75,8 +80,12 @@ public class Villager : MonoBehaviour
 
     public void Work(Resource resource)
     {
+        StopCoroutine("CollectResource");
+        ResetResource();
+
         this.currentResource = resource;
         string resourceName = this.currentResource.getName();
+        //Debug.Log(resourceName);
 
         if (resourceName == "TreasureBarrel" || resourceName == "BerryBush" || resourceName == "Pond")
         {
@@ -103,22 +112,27 @@ public class Villager : MonoBehaviour
             if (Time.time >= nextCollect)
             {
                 nextCollect = Time.time + cooldownTime;
-                this.economyScript.changeMaterial(material, materialPerTime);
+                this.economyScript.ChangeMaterial(material, materialPerTime, isOpponent);
             }
             yield return null;
         }
 
-        
-        animator.SetBool("isWorking", false);
-        animator.SetBool("isCollectingTree", false);
-        animator.SetBool("isCollectingFruit", false);
-        animator.SetBool("isFarming", false);
-        this.foundResource = false;
+        ResetResource();
+
         if (this.currentResource != null) Destroy(this.currentResource.gameObject);
         //Probably should also remove it from resource list but for now does not matter
         this.currentResource = null;
         this.startWorking = false;
 
         yield return null;
+    }
+
+    private void ResetResource()
+    {
+        animator.SetBool("isWorking", false);
+        animator.SetBool("isCollectingTree", false);
+        animator.SetBool("isCollectingFruit", false);
+        animator.SetBool("isFarming", false);
+        this.foundResource = false;
     }
 }

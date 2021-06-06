@@ -11,7 +11,7 @@ public class BuildingHandler : MonoBehaviour
 
     void Awake()
     {
-        CreateBuilding(barracks, new Vector3(20, this.terrain.SampleHeight(new Vector3(20, 0, 20)), 20));
+        //CreateBuilding(barracks, new Vector3(20, this.terrain.SampleHeight(new Vector3(20, 0, 20)), 20));
         //CreateUnits(barracks, new Vector3(0,0,0));
     }
 

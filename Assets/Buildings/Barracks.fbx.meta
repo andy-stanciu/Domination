@@ -3,7 +3,52 @@ guid: ddf0dbba501d34c4d9a8d24a9ac96754
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fe_village_base
+    second: {fileID: 2100000, guid: 1bcc0f72ba6c6774391786e90e7d312d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_doors
+    second: {fileID: 2100000, guid: 234c8203f0caae24e841dd58b88e6ee5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_floor_stone03
+    second: {fileID: 2100000, guid: 3eaf0caa44d4037478d1567c6fa720f6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_floor_wood04
+    second: {fileID: 2100000, guid: c4a12aa5f52909e4db1ccf57fdf5a2ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_forge
+    second: {fileID: 2100000, guid: 96209833bc58bf24f9931fce6fa12307, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_shields
+    second: {fileID: 2100000, guid: 58925e434be521849b187d8e5762bac3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_walls
+    second: {fileID: 2100000, guid: 034f2291274c46e4bbc664c4f69bd5ea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_webs
+    second: {fileID: 2100000, guid: d7ec68eb54cc6414eb24fde5e3af4fbd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: fi_village_wood
+    second: {fileID: 2100000, guid: b96158f7c91078141810714545ca3f13, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

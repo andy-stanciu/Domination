@@ -38,13 +38,8 @@ public class UnitHandler : MonoBehaviour
 
     void Start()
     {
-        CreateUnits(longbowman, 5, 4, zero, false);
-        CreateUnits(longbowman, 5, 4, new Vector3(0, 0, -20), true);
-        //CreateUnits(longbowman, 4, 5, zero, false);
-        //CreateUnits(longbowman, 4, 5, new Vector3(0, 0, -30), true);
-        //CreateUnits(longbowman, 10, 10, zero);
-        //CreateUnits(longbowman, 4, 5, zero);
-        CreateUnits(villager, 5, 4, zero, false);
+        CreateUnits(villager, 5, 5, new Vector3(240, 0, -240), false);
+        CreateUnits(villager, 5, 5, new Vector3(-240, 0, 240), true);
     }
 
     void Update()
@@ -165,6 +160,11 @@ public class UnitHandler : MonoBehaviour
                 Unit unit = unitObj.GetComponent<Unit>();
                 unit.CurrentNode = this.grid.NodeFromWorldPoint(loc);
                 unit.InstantiateUnit(isOpponent);
+
+                if (type == this.villager)
+                {
+                    unitObj.GetComponent<Villager>().SetTeam(isOpponent);
+                }
 
                 //Debug.Log("Spawned unit at " + loc);
             }

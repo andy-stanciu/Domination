@@ -61,23 +61,8 @@ public class SelectionManager : MonoBehaviour
                 }
                 else
                 {
-                    /*if (rayHit.collider.gameObject.GetComponent<InteractableResource>() != null)
-                    {
-                        foreach (GameObject obj in selectedObjects)
-                        {
-                            if (obj.GetComponent<Villager>() != null)
-                            {
-                                this.unitScript = GameObject.FindGameObjectWithTag("UnitHandler").GetComponent<UnitHandler>();
-                                this.unitScript.MoveUnit(obj.GetComponent<Unit>(), new Vector3(rayHit.collider.gameObject.transform.position.x, rayHit.collider.gameObject.transform.position.y, rayHit.collider.gameObject.transform.position.z), rayHit.collider.gameObject);
-                            }
-                        }
-                        ClearSelection();
-                    }
-                    else
-                    {*/
-                        ClearSelection();
-                        AddToSelection(rayHit.collider.gameObject, clicked);
-                    //}
+                    ClearSelection();
+                    AddToSelection(rayHit.collider.gameObject, clicked);
                 }
             }
             else
@@ -182,7 +167,7 @@ public class SelectionManager : MonoBehaviour
         clicked.isSelected = true;
         clicked.OnClick();
 
-        ToggleBuildingGui(obj, true);
+        if (obj.CompareTag("Player")) ToggleBuildingGui(obj, true);
         ToggleHealthBar(obj, true);
     }
 
@@ -195,7 +180,7 @@ public class SelectionManager : MonoBehaviour
         clicked.isSelected = false;
         clicked.OnClick();
 
-        ToggleBuildingGui(obj, false);
+        if (obj.CompareTag("Player")) ToggleBuildingGui(obj, false);
         ToggleHealthBar(obj, false);
     }
 
@@ -215,6 +200,12 @@ public class SelectionManager : MonoBehaviour
         if (unit != null)
         {
             unit.ToggleHealthBar(show);
+        }
+
+        Building building = obj.GetComponent<Building>();
+        if (building != null)
+        {
+            building.ToggleHealthBar(show);
         }
     }
 }

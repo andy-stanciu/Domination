@@ -14,7 +14,7 @@ public class Resource : MonoBehaviour
     [SerializeField]
     private string name;
     [SerializeField]
-    private string material;
+    public string material;
     [SerializeField]
     private double coolDownTime;
     [SerializeField]

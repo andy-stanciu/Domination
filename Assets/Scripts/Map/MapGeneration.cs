@@ -47,10 +47,10 @@ public class MapGeneration : MonoBehaviour
 
     void Awake()
     {
-        this.xPosBoundary = 230;
-        this.xNegBoundary = -230;
-        this.zPosBoundary = 230;
-        this.zNegBoundary = -230;
+        this.xPosBoundary = 250;
+        this.xNegBoundary = -250;
+        this.zPosBoundary = 250;
+        this.zNegBoundary = -250;
 
         this.resources = new List<Resource>();
 

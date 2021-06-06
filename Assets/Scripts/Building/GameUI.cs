@@ -29,19 +29,4 @@ public class GameUI : MonoBehaviour
             button.gameObject.SetActive(true);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void DragBuilding()
-    {
-        Vector3 mousePos = Input.mousePosition;
-        {
-            Debug.Log(mousePos.x);
-            Debug.Log(mousePos.y);
-        }
-    }
 }

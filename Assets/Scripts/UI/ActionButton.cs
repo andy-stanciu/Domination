@@ -14,7 +14,7 @@ public class ActionButton : MonoBehaviour
     {
         if (building != null)
         {
-            building.ExecuteAction(action);
+            building.ExecuteAction(action, false);
         }
     }
 

@@ -307,7 +307,7 @@ MonoBehaviour:
   material: wood
   coolDownTime: 1
   materialPerTime: 0.5
-  lastingTime: 15
+  lastingTime: 60
   interactable: 1
 --- !u!1 &4804706081485823927
 GameObject:

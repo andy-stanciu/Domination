@@ -116,8 +116,21 @@ public class Unit : MonoBehaviour
 
     private void SetAlpha(Color color)
     {
-        if (this.alphaPrefab == null) this.alphaPrefab = this.transform.Find("Erika_Archer_Meshes").transform.Find("Erika_Archer_Clothes_Mesh").GetComponent<SkinnedMeshRenderer>();
-        this.alphaPrefab.material.color = color;
+        if (this.alphaPrefab == null)
+        {
+            if (!this.canPerformTask)
+            {
+                this.alphaPrefab = this.transform.Find("Erika_Archer_Meshes").transform.Find("Erika_Archer_Clothes_Mesh").GetComponent<SkinnedMeshRenderer>();
+                this.alphaPrefab.material.color = color;
+            }
+            else
+            {
+                this.alphaPrefab = this.transform.Find("Guard02").GetComponent<SkinnedMeshRenderer>();
+                if (color == Color.red) this.alphaPrefab.material.color = Color.red + new Color(0, 0.5f, 0.5f);
+                else this.alphaPrefab.material.color = Color.blue + new Color(0.5f, 0.5f, 0);
+            }
+            
+        }
     }
 
     private void CreateProjectile()
@@ -208,14 +221,14 @@ public class Unit : MonoBehaviour
         }
 
         //Debug keys
-        if (Input.GetKeyDown(KeyCode.K))
+        /*if (Input.GetKeyDown(KeyCode.K))
         {
             if (this.selectionHandler.isSelected) RemoveUnit();
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
             if (this.selectionHandler.isSelected) Damage(10);
-        }
+        }*/
     }
 
     private void Search()
@@ -382,6 +395,9 @@ public class Unit : MonoBehaviour
             Unit targetUnit = this.target.GetComponent<Unit>();
             if (targetUnit != null) targetUnit.Damage(this.meleeDamage);
 
+            Building targetBuilding = this.target.GetComponent<Building>();
+            if (targetBuilding != null) targetBuilding.Damage(this.meleeDamage);
+
             yield return new WaitForSeconds(6f / this.rateOfFire);
         }
     }
@@ -434,6 +450,9 @@ public class Unit : MonoBehaviour
         {
             Unit targetUnit = this.target.GetComponent<Unit>();
             if (targetUnit != null) targetUnit.Damage(this.rangedDamage);
+
+            Building targetBuilding = this.target.GetComponent<Building>();
+            if (targetBuilding != null) targetBuilding.Damage(this.rangedDamage);
         }
     }
 
@@ -477,7 +496,7 @@ public class Unit : MonoBehaviour
         float distance = GetDistanceToTarget(obj.transform.position, transform.position);
 
         if (distance > this.range) this.unitHandler.MoveUnitToNode(this, obj.transform.position, false);
-        //Eventually make this only be triggered when the villager arrives and begins harvesting the resource
+        
         this.villager.Work(resource);
     }
 
@@ -507,8 +526,12 @@ public class Unit : MonoBehaviour
     {
         //PathRequestManager.RequestPath(transform.position, target, OnPathFound);
         unitAgent.SetDestination(target);
+        
         //Clearing target if there is one
         this.target = null;
+        //Clearing resource if there is one
+        if (this.villager != null) this.villager.currentResource = null;
+
         StartMoving();
     }
 
@@ -526,42 +549,60 @@ public class Unit : MonoBehaviour
 
     private void RemoveUnit()
     {
-        animator.SetBool("isDead", true);
-
-        //Setting unit to be in obstacle layer
-        this.gameObject.layer = 9;
-
-        //Setting the tag to dead - not needed anymore as the object is beibng moved to the obstacle layer
-        //this.gameObject.tag = "Dead";
-
-        //De-select the unit if it was selected
-        if (this.selectionHandler.isSelected) this.selectionManager.RemoveFromSelection(gameObject, selectionHandler);
-
-        //Making the current node unoccupied
-        this.currentNode.isOccupied = false;
-
-        //Stopping corountines if the unit was in the process of attacking
-        if (this.state == State.Attacking)
+        if (this.villager == null)
         {
-            StopCoroutine("Shoot");
-            StopCoroutine("Melee");
-            StopCoroutine("AnimateProjectile");
+            animator.SetBool("isDead", true);
+
+            //Setting unit to be in obstacle layer
+            this.gameObject.layer = 9;
+
+            //Setting the tag to dead - not needed anymore as the object is being moved to the obstacle layer
+            //this.gameObject.tag = "Dead";
+
+            //De-select the unit if it was selected
+            if (this.selectionHandler.isSelected) this.selectionManager.RemoveFromSelection(gameObject, selectionHandler);
+
+            //Making the current node unoccupied
+            this.currentNode.isOccupied = false;
+
+            //Stopping corountines if the unit was in the process of attacking
+            if (this.state == State.Attacking)
+            {
+                StopCoroutine("Shoot");
+                StopCoroutine("Melee");
+                StopCoroutine("AnimateProjectile");
+            }
+
+            //Clearing selection capability to make sure that the unit is not controllable after death
+            Destroy(gameObject.GetComponent<SelectionHandler>());
+
+            //Destroying healthbar and projectile for unit as well
+            Destroy(this.healthBar);
+            Destroy(this.projectile);
+
+            //By giving the unit velocity in the direction that they are moving, the death looks realistic
+            NavMeshAgent unitAgent = gameObject.GetComponent<NavMeshAgent>();
+            unitAgent.stoppingDistance = 2;
+            unitAgent.SetDestination(gameObject.transform.position + unitAgent.velocity * 0.5f);
+
+            //Destroying the unit after a bit of time
+            Destroy(gameObject, 8f);
         }
+        else
+        {
+            //De-select the unit if it was selected
+            if (this.selectionHandler.isSelected) this.selectionManager.RemoveFromSelection(gameObject, selectionHandler);
 
-        //Clearing selection capability to make sure that the unit is not controllable after death
-        Destroy(gameObject.GetComponent<SelectionHandler>());
+            //Making the current node unoccupied
+            this.currentNode.isOccupied = false;
 
-        //Destroying healthbar and projectile for unit as well
-        Destroy(this.healthBar);
-        Destroy(this.projectile);
+            //Destroying healthbar and projectile for unit as well
+            Destroy(this.healthBar);
+            Destroy(this.projectile);
 
-        //By giving the unit velocity in the direction that they are moving, the death looks realistic
-        NavMeshAgent unitAgent = gameObject.GetComponent<NavMeshAgent>();
-        unitAgent.stoppingDistance = 2;
-        unitAgent.SetDestination(gameObject.transform.position + unitAgent.velocity * 0.5f);
-
-        //Destroying the unit after a bit of time
-        Destroy(gameObject, 8f);
+            //Destroying the unit immediately
+            Destroy(gameObject);
+        }
     }
 
     /**

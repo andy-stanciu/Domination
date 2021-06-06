@@ -1,14 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlacementHandler : MonoBehaviour
 {
     [SerializeField]
     private GameObject barracksPrefab;
+    [SerializeField]
+    private GameObject barracksGhost;
+    [SerializeField]
+    private Cost barracksCost;
 
     [SerializeField]
     private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask obstaclesLayer;
+    [SerializeField]
+    private LayerMask selectableObjects;
 
     private new Camera camera;
     private GameObject ghost;
@@ -17,33 +26,44 @@ public class PlacementHandler : MonoBehaviour
 
     private void Start()
     {
-        this.ghost = Instantiate(this.barracksPrefab, Vector3.zero, this.barracksPrefab.transform.rotation);
-
-        //Set ghost albedo to some white color, set alpha to be like 50% transparent
+        this.ghost = Instantiate(this.barracksGhost, Vector3.zero, this.barracksGhost.transform.rotation);
 
         //Hiding it by default
         this.ghost.SetActive(false);
+
         this.ghostBuilding = this.ghost.GetComponent<Building>();
         this.ghostBuilding.isGhost = true;
-        camera = Camera.main;
+        this.camera = Camera.main;
     }
 
     private void Update()
     {
         if (this.isPlacingBuilding)
         {
+            bool canPlace = !Physics.CheckBox(this.ghost.transform.position, new Vector3(3.5f, 3, 7), Quaternion.identity, obstaclesLayer) && !Physics.CheckBox(this.ghost.transform.position, new Vector3(3.5f, 3, 7), Quaternion.identity, selectableObjects);
+            this.ghostBuilding.canPlace = canPlace;
+            this.ghostBuilding.SetAlbedo();
+
             Vector3 hoverLocation = CastRay();
-            this.ghost.transform.position = hoverLocation;
+            if (hoverLocation != Vector3.zero) this.ghost.transform.position = hoverLocation;
             this.ghost.SetActive(true);
 
             if (Input.GetMouseButtonDown(0))
             {
                 if (this.ghostBuilding.canPlace)
                 {
-                    Instantiate(this.barracksPrefab, this.ghost.transform.position, this.ghost.transform.rotation);
+                    GameObject spawn = Instantiate(this.barracksPrefab, this.ghost.transform.position, this.ghost.transform.rotation);
+                    spawn.GetComponent<Building>().InstantiateBuilding(false);
+
                     this.isPlacingBuilding = false;
                     this.ghost.SetActive(false);
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                this.isPlacingBuilding = false;
+                this.ghost.SetActive(false);
             }
         }
     }
@@ -52,7 +72,7 @@ public class PlacementHandler : MonoBehaviour
         Vector3 location = Vector3.zero;
         RaycastHit rayHit;
 
-        Ray ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        Ray ray = this.camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out rayHit, Mathf.Infinity, groundLayer))
         {
@@ -64,6 +84,10 @@ public class PlacementHandler : MonoBehaviour
 
     public void OnClick()
     {
-        this.isPlacingBuilding = true;
+        if (this.barracksCost.CanAfford(false))
+        {
+            this.barracksCost.SubtractCost(false);
+            this.isPlacingBuilding = true;
+        }
     }
 }

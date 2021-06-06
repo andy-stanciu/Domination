@@ -22,9 +22,9 @@ public class TerrainGenerator : MonoBehaviour
 
         this.sizeX = this.sizeZ = terrain.terrainData.heightmapResolution;
 
-        //terrain.terrainData = GenerateTerrain(terrain.terrainData);
+        terrain.terrainData = GenerateTerrain(terrain.terrainData);
 
-        //NavMeshBuilder.BuildNavMesh();
+        NavMeshBuilder.BuildNavMesh();
     }
 
     private TerrainData GenerateTerrain(TerrainData terrainData)
@@ -56,6 +56,7 @@ public class TerrainGenerator : MonoBehaviour
         float xCoord = x / this.sizeX * scale + offsetX;
         float zCoord = z / this.sizeZ * scale + offsetZ;
 
-        return Mathf.PerlinNoise(xCoord, zCoord);
+        return 0;
+        //return Mathf.PerlinNoise(xCoord, zCoord);
     }
 }
